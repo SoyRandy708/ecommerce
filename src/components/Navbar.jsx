@@ -17,7 +17,7 @@ export function Navbar() {
     ]
 
     return (
-        <nav className="w-full flex justify-between items-center fixed top-0 z-10 py-5 px-8 text-base"> 
+        <nav className="w-full flex justify-between items-center fixed top-0 z-10 py-5 px-8 text-base bg-violet-200"> 
             <ul className="flex items-center gap-5">
                 {menuLeft.map(link => (
                     <li
