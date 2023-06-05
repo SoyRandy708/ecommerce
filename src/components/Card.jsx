@@ -1,11 +1,24 @@
+import { useContext } from "react"
+import { ShoppingContext } from "../context"
 import { BsPlusCircleFill } from "react-icons/bs"
 
 export function Card({ name, price, category, image, description }) {
     const title = name.split(" ").slice(0, 2).join(" ")
+    const {
+        cartCounter, 
+        setCartCounter,
+    } = useContext(ShoppingContext)
+
+    const addToCart = () => {
+        setCartCounter(cartCounter + 1)
+    }
 
     return (
         <figure className="relative w-56 h-56 bg-blue-200 rounded-xl overflow-hidden">
-            <BsPlusCircleFill className="absolute top-2 right-2 w-8 h-8 cursor-pointer"/>
+            <BsPlusCircleFill 
+                className="absolute top-2 right-2 w-8 h-8 cursor-pointer"
+                onClick={addToCart}
+            />
 
             <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2">{category}</p>
 
