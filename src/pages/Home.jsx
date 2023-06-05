@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react"
 import { Cards } from "../components/Cards"
 import { Card } from "../components/Card"
-import { API } from "../services/api"
+import { AllProducts } from "../services/api"
 
 export function Home() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        fetch(API)
-            .then(response => response.json())
-            .then(data => {
-                setProducts(data.products)
-            })
+        const fetchData = async () => {
+            const productList = await AllProducts()
+            setProducts(productList)
+        }
+    
+        fetchData()
     }, [])
 
     return (

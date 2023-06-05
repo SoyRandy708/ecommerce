@@ -5,7 +5,6 @@ const ShoppingContext = createContext()
 
 function ShoppingProvider({ children }) {
     const [cartCounter, setCartCounter] = useState(0)
-    console.log(cartCounter)
 
     return (
         <ShoppingContext.Provider value={{
