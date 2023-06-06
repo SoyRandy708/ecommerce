@@ -2,19 +2,21 @@ import { useContext } from "react"
 import { ShoppingContext } from "../context"
 import { BsPlusCircleFill } from "react-icons/bs"
 
-export function Card({ name, price, category, image, description }) {
+export function Card({ data, name, price, category, image, description }) {
     const title = name.split(" ").slice(0, 2).join(" ")
     const {
         cartCounter, 
         setCartCounter,
         openProductDetail,
+        setProductToShow
     } = useContext(ShoppingContext)
 
     const addToCart = () => {
         setCartCounter(cartCounter + 1)
     }
 
-    const previewProduct = () => {
+    const previewProduct = (product) => {
+        setProductToShow(product)
         openProductDetail()
     }
 
@@ -30,7 +32,7 @@ export function Card({ name, price, category, image, description }) {
             <img 
                 src={image} 
                 alt={description} 
-                onClick={previewProduct} 
+                onClick={() => previewProduct(data)} 
                 className="h-4/5 w-full object-fill cursor-pointer"
             />
 

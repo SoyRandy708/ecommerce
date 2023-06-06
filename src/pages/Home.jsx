@@ -24,6 +24,7 @@ export function Home() {
                 {products.map(product => (
                     <Card 
                         key={product.id}
+                        data={product}
                         name={product.title}
                         price={product.price}
                         category={product.category}
