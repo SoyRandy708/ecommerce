@@ -7,10 +7,15 @@ export function Card({ name, price, category, image, description }) {
     const {
         cartCounter, 
         setCartCounter,
+        openProductDetail,
     } = useContext(ShoppingContext)
 
     const addToCart = () => {
         setCartCounter(cartCounter + 1)
+    }
+
+    const previewProduct = () => {
+        openProductDetail()
     }
 
     return (
@@ -18,11 +23,16 @@ export function Card({ name, price, category, image, description }) {
             <BsPlusCircleFill 
                 className="absolute top-2 right-2 w-8 h-8 cursor-pointer"
                 onClick={addToCart}
-            />
+                />
 
             <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2">{category}</p>
 
-            <img src={image} alt={description} className="h-4/5 w-full  object-fill"/>
+            <img 
+                src={image} 
+                alt={description} 
+                onClick={previewProduct} 
+                className="h-4/5 w-full object-fill cursor-pointer"
+            />
 
             <figcaption className="flex justify-between px-4 py-2">
                 <p>{title}</p>

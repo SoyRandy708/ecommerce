@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
+import { AllProducts } from "../services"
 import { Cards } from "../components/Cards"
 import { Card } from "../components/Card"
-import { AllProducts } from "../services/api"
+import { ProductDetail } from "../components/ProductDetail"
 
 export function Home() {
     const [products, setProducts] = useState([])
@@ -31,6 +32,7 @@ export function Home() {
                     />
                 ))}        
             </Cards>
+            <ProductDetail />
         </>
     )
 }
