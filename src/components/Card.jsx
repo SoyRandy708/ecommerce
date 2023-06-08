@@ -5,14 +5,15 @@ import { BsPlusCircleFill } from "react-icons/bs"
 export function Card({ data, name, price, category, image, description }) {
     const title = name.split(" ").slice(0, 2).join(" ")
     const {
-        cartCounter, 
-        setCartCounter,
+        cartProducts, 
+        setCartProducts,
         openProductDetail,
-        setProductToShow
+        setProductToShow,
     } = useContext(ShoppingContext)
 
-    const addToCart = () => {
-        setCartCounter(cartCounter + 1)
+    const addToCart = (product) => {
+        setCartProducts([...cartProducts, product])
+        console.log(cartProducts)
     }
 
     const previewProduct = (product) => {
@@ -24,7 +25,7 @@ export function Card({ data, name, price, category, image, description }) {
         <figure className="relative w-56 h-56 bg-blue-200 rounded-xl overflow-hidden">
             <BsPlusCircleFill 
                 className="absolute top-2 right-2 w-8 h-8 cursor-pointer"
-                onClick={addToCart}
+                onClick={() => addToCart(data)}
                 />
 
             <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2">{category}</p>

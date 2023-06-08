@@ -4,7 +4,7 @@ import { useState } from "react"
 const ShoppingContext = createContext()
 
 function ShoppingProvider({ children }) {
-    const [cartCounter, setCartCounter] = useState(0)
+    const [cartProducts, setCartProducts] = useState([])
     const [isOpenProductDetail, setIsOpenProductDetail] = useState(false)
     const [productToShow, setProductToShow] = useState({})
 
@@ -13,8 +13,8 @@ function ShoppingProvider({ children }) {
 
     return (
         <ShoppingContext.Provider value={{
-            cartCounter,
-            setCartCounter,
+            cartProducts,
+            setCartProducts,
             openProductDetail,
             closeProductDetail,
             isOpenProductDetail,

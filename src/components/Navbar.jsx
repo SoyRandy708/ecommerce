@@ -5,7 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export function Navbar() {
     const {
-        cartCounter
+        cartProducts
     } = useContext(ShoppingContext)
 
     const activeStyle = "underline underline-offset-4"
@@ -45,7 +45,7 @@ export function Navbar() {
                         to={"/MyOrder"}
                     >
                         <AiOutlineShoppingCart className="inline-block w-6 h-6 mr-1"/> 
-                        {cartCounter}
+                        {cartProducts.length}
                     </NavLink>
                 </li>
 
