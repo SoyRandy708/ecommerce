@@ -34,7 +34,6 @@ export function Card({ data, name, price, category, image, description }) {
                 <p>{title}</p>
                 <span className="text-black font-bold">${price}</span> 
             </figcaption>
-            
             <div className="absolute bottom-2 flex justify-around w-full font-medium [&>button]:py-1 [&>button]:px-2 [&>button]:rounded-lg [&>button]:text-lg [&>button]:cursor-pointer">
                 <button
                     className="transition-colors duration-300 bg-violet-300 hover:bg-violet-700 hover:text-white"
