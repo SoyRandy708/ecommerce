@@ -8,9 +8,12 @@ export function MyOrder() {
         setCartProducts,
     } = useContext(ShoppingContext)
 
+    let totalPrice = 0
     const groupedProducts = [] 
 
     cartProducts.map(product => {
+        totalPrice += product.price
+
         const existingProduct = groupedProducts.find(pro => pro.title === product.title)
 
         if (existingProduct) {
@@ -44,9 +47,9 @@ export function MyOrder() {
         <>
             <h1>MyOrder</h1>
             {groupedProducts.length === 0 ? "SIN PRODUCTOS" :
-                <div className="flex flex-wrap justify-center gap-3">
-                    <nav className=" w-9/12">
-                        <ul className="grid grid-cols-[120px_1fr_1fr_1fr_40px] place-items-center w-full font-bold">
+                <div className="relative flex flex-wrap justify-center gap-3">
+                    <nav className="w-9/12 max-w-3xl">
+                        <ul className="grid grid-cols-[120px_1fr_1fr_1fr_40px] gap-2 place-items-center w-full font-bold">
                             <li></li>
                             <li>PRODUCTO</li>
                             <li>UNIDADES</li>
@@ -83,6 +86,10 @@ export function MyOrder() {
                             />
                         </article>
                     ))}
+                    <p className="w-full max-w-3xl my-5 flex justify-between"> 
+                        <span className="font-medium">TOTAL:</span>
+                        <span className="font-bold">${totalPrice}</span>
+                    </p>
                 </div>
             }
         </>
