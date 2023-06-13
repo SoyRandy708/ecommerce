@@ -6,6 +6,8 @@ export function MyOrder() {
     const {
         cartProducts,
         setCartProducts,
+        orders,
+        setOrders,
     } = useContext(ShoppingContext)
 
     let totalPrice = 0
@@ -43,6 +45,21 @@ export function MyOrder() {
         setCartProducts(newProducts)
     }
 
+    const cleanCart = () => {
+        setCartProducts([])
+    }
+
+    const addOrder = () => {
+        const newOrder = {
+            productos: cartProducts,
+            totalPrice: totalPrice,
+            fecha: Date(),
+        }
+
+        setOrders(orders, newOrder)
+        cleanCart()
+    }
+
     return (
         <>
             <h1>MyOrder</h1>
@@ -56,6 +73,7 @@ export function MyOrder() {
                             <li>PRECIO</li>
                         </ul>
                     </nav>
+                    
                     {groupedProducts.map(product => (
                         <article 
                             key={product.id} 
@@ -90,6 +108,18 @@ export function MyOrder() {
                         <span className="font-medium">TOTAL:</span>
                         <span className="font-bold">${totalPrice}</span>
                     </p>
+
+                    <div className="flex justify-evenly w-full max-w-3xl">
+                        <button
+                            className="py-2 px-4 text-lg bg-black text-white rounded-md hover:bg-violet-700 transition-colors duration-300"
+                            onClick={() => cleanCart()}
+                        >Limpiar Carrito</button>
+
+                        <button
+                            className="py-2 px-4 text-lg bg-black text-white rounded-md hover:bg-violet-700 transition-colors duration-300"
+                            onClick={() => addOrder()}
+                        >Hacer pedido</button>
+                    </div>
                 </div>
             }
         </>

@@ -5,6 +5,7 @@ const ShoppingContext = createContext()
 
 function ShoppingProvider({ children }) {
     const [cartProducts, setCartProducts] = useState([])
+    const [orders, setOrders] = useState([])
     const [isOpenProductDetail, setIsOpenProductDetail] = useState(false)
     const [productToShow, setProductToShow] = useState({})
 
@@ -15,6 +16,8 @@ function ShoppingProvider({ children }) {
         <ShoppingContext.Provider value={{
             cartProducts,
             setCartProducts,
+            orders,
+            setOrders,
             openProductDetail,
             closeProductDetail,
             isOpenProductDetail,
