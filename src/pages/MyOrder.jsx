@@ -51,12 +51,12 @@ export function MyOrder() {
 
     const addOrder = () => {
         const newOrder = {
-            productos: cartProducts,
+            products: cartProducts,
             totalPrice: totalPrice,
-            fecha: Date(),
+            date: Date(),
         }
 
-        setOrders(orders, newOrder)
+        setOrders([newOrder, ...orders])
         cleanCart()
     }
 
