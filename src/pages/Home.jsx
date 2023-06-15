@@ -20,7 +20,7 @@ export function Home() {
         <>
             <h1>HOME</h1>
 
-            <section className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 w-full">
+            <Cards>
                 {products.map(product => (
                     <Card 
                         key={product.id}
@@ -32,8 +32,8 @@ export function Home() {
                         description={product.description}
                     />
                 ))}        
-            </section>
-            
+            </Cards>
+
             <ProductDetail />
         </>
     )

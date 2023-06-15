@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { ShoppingContext } from "../context"
 import { Card } from "../components/Card"
+import { Cards } from "../components/Cards"
 
 export function Favorites() {
     const {
@@ -11,7 +12,7 @@ export function Favorites() {
         <>
             <h1 className="m-4 text-2xl font-bold">Productos Favoritos</h1>
 
-            <section className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 w-full">
+            <Cards>
                 {favorites.map(product => (
                     <Card 
                         key={product.id}
@@ -23,7 +24,7 @@ export function Favorites() {
                         description={product.description}
                     />
                 ))}
-            </section>
+            </Cards>
         </>
     )
 }
