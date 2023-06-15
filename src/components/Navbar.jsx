@@ -15,6 +15,7 @@ export function Navbar() {
         {to: "/Ropa", texto: "Ropa"},
         {to: "/Comestibles", texto: "Comestibles"},
         {to: "/Tecnologia", texto: "Tecnologia"},
+        {to: "/Favorites", texto: "Favoritos"},
         {to: "/Otros", texto: "Otros"},
     ]
 

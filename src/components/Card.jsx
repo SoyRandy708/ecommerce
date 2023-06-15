@@ -1,12 +1,13 @@
 import { useContext } from "react"
 import { ShoppingContext } from "../context"
-import { AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
 
-export function Card({ data, name, price, category, image, description }) {
-    const title = name.split(" ").slice(0, 2).join(" ")
+export function Card({ data, title, price, category, image, description }) {
     const {
         cartProducts, 
         setCartProducts,
+        favorites,
+        setFavorites,
         openProductDetail,
         setProductToShow,
     } = useContext(ShoppingContext)
@@ -15,28 +16,50 @@ export function Card({ data, name, price, category, image, description }) {
         setCartProducts([...cartProducts, product])
     }
 
+    const addToFavorite = (product) => {
+        setFavorites([...favorites, product])
+    }
+
+    const deleteToFavorite = (product) => {
+        const newFavorites = [...favorites]
+        const index = newFavorites.findIndex(pro => pro.title === product.title)
+        newFavorites.splice(index, 1)
+        setFavorites(newFavorites)
+    }
+
     const previewProduct = (product) => {
         setProductToShow(product)
         openProductDetail()
     }
 
     return (
-        <figure className="relative w-56 h-56 bg-blue-200 rounded-xl overflow-hidden">
-            <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2">{category}</p>
+        <figure className="relative w-full h-60 bg-blue-200 rounded-xl overflow-hidden">
+            {favorites.find(pro => pro.title === title) ? 
+                <AiFillHeart 
+                onClick={() => deleteToFavorite(data)}
+                className="absolute top-2 right-2 w-7 h-7 text-red-700 cursor-pointer"
+                />
+            : 
+                <AiOutlineHeart 
+                    onClick={() => addToFavorite(data)}
+                    className="absolute top-2 right-2 w-7 h-7 text-red-700 cursor-pointer"   
+                />
+            }
+            <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2"> {category} </p>
 
             <img 
                 src={image} 
                 alt={description} 
-                className="aspect-video object-cover cursor-pointer"
+                className="aspect-video object-cover"
             />
 
-            <figcaption className="flex justify-between px-4 py-2">
-                <p>{title}</p>
-                <span className="text-black font-bold">${price}</span> 
+            <figcaption className="flex gap-3 justify-between px-4 py-2">
+                <p className="text-ellipsis whitespace-nowrap overflow-hidden"> {title} </p>
+                <span className="text-black font-bold"> ${price} </span> 
             </figcaption>
             <div className="absolute bottom-2 flex justify-around w-full font-medium [&>button]:py-1 [&>button]:px-2 [&>button]:rounded-lg [&>button]:text-lg [&>button]:cursor-pointer">
                 <button
-                    className="transition-colors duration-300 bg-violet-300 hover:bg-violet-700 hover:text-white"
+                    className="flex transition-colors duration-300 bg-violet-300 hover:bg-violet-700 hover:text-white"
                     onClick={() => previewProduct(data)}
                 >
                     Ver mas

@@ -20,19 +20,20 @@ export function Home() {
         <>
             <h1>HOME</h1>
 
-            <Cards>
+            <section className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 w-full">
                 {products.map(product => (
                     <Card 
                         key={product.id}
                         data={product}
-                        name={product.title}
+                        title={product.title}
                         price={product.price}
                         category={product.category}
                         image={product.images[0]}
                         description={product.description}
                     />
                 ))}        
-            </Cards>
+            </section>
+            
             <ProductDetail />
         </>
     )
