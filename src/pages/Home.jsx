@@ -1,11 +1,20 @@
-import { useState, useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { AllProducts } from "../services"
+import { ShoppingContext } from "../context"
 import { Cards } from "../components/Cards"
 import { Card } from "../components/Card"
 import { ProductDetail } from "../components/ProductDetail"
 
 export function Home() {
-    const [products, setProducts] = useState([])
+    const {
+        setProducts,
+        setSearchByTitle,
+        filterProducts,
+    } = useContext(ShoppingContext)
+
+    const changeSearchTitle = (event) => {
+        setSearchByTitle(event.target.value)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,10 +27,17 @@ export function Home() {
 
     return (
         <>
-            <h1>HOME</h1>
+            <h1 className="m-4 text-2xl font-bold">HOME</h1>
+
+            <input 
+                type="text"
+                placeholder="Busca tu producto..."
+                className="w-full max-w-sm p-3 mb-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
+                onChange={(event) => changeSearchTitle(event)}
+            />
 
             <Cards>
-                {products.map(product => (
+                {filterProducts.map(product => (
                     <Card 
                         key={product.id}
                         data={product}
