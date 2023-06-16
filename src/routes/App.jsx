@@ -6,16 +6,17 @@ import { MyOrder } from "../pages/MyOrder"
 import { SignIn } from "../pages/SignIn"
 import { Favorites } from "../pages/Favorites"
 import { NotFound } from "../pages/NotFound"
-import { Navbar } from "../components/NavBar";
+import { Navbar } from "../components/Navbar"
 import { Layout } from "../components/Layout"
 
 const AppRoutes = () => {
   let routes = useRoutes([
-    { path: "/", element: <Home /> },
+    { path: "/Products/All", element: <Home /> },
+    { path: "/Products/Category/:category", element: <Home /> },
+    { path: "/Products/Favorites", element: <Favorites /> },
     { path: "/MyAccount", element: <MyAccount /> },
     { path: "/MyOrder", element: <MyOrder /> },
     { path: "/SignIn", element: <SignIn /> },
-    { path: "/Favorites", element: <Favorites /> },
     { path: "/*", element: <NotFound /> },
   ])
 

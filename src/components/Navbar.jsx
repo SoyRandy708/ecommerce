@@ -5,25 +5,30 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export function Navbar() {
     const {
-        cartProducts
+        cartProducts,
+        setSearchByCategory,
     } = useContext(ShoppingContext)
 
     const activeStyle = "underline underline-offset-4"
 
     const menuLeft = [
-        {to: "/", texto: "Todo"},
-        {to: "/Ropa", texto: "Ropa"},
-        {to: "/Comestibles", texto: "Comestibles"},
-        {to: "/Tecnologia", texto: "Tecnologia"},
-        {to: "/Favorites", texto: "Favoritos"},
-        {to: "/Otros", texto: "Otros"},
+        {to: "/Products/All", texto: "All"},
+        {to: "/Products/Favorites", texto: "Favorites"},
+        {to: "/Products/Category/Smartphones", texto: "Smartphones"},
+        {to: "/Products/Category/Laptops", texto: "Laptops"},
+        {to: "/Products/Category/Fragrances", texto: "Fragrances"},
+        {to: "/Products/Category/Skincare", texto: "Skincare"},
+        {to: "/Products/Category/Groceries", texto: "Groceries"},
+        {to: "/Products/Category/Home-decoration", texto: "Home-decoration"},
     ]
 
     const menuRight = [
-        {to: "/", texto: "Home"},
         {to: "/MyAccount", texto: "MyAccount"},
     ]
 
+    const selectCategory = (event) => {
+        setSearchByCategory(event.target.textContent)
+    }
 
     return (
         <nav className="w-full h-[60px] flex justify-between items-center fixed top-0 z-10 py-5 px-8 text-base bg-violet-200"> 
@@ -32,6 +37,7 @@ export function Navbar() {
                     <li key={link.texto} >
                         <NavLink 
                             to={link.to}
+                            onClick={(event) => selectCategory(event)}
                             className={({isActive}) => isActive ? activeStyle : ""}
                         >
                             {link.texto}
