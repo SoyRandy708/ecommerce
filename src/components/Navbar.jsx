@@ -19,7 +19,7 @@ export function Navbar() {
         {to: "/Products/Category/Fragrances", texto: "Fragrances"},
         {to: "/Products/Category/Skincare", texto: "Skincare"},
         {to: "/Products/Category/Groceries", texto: "Groceries"},
-        {to: "/Products/Category/Home-decoration", texto: "Home-decoration"},
+        {to: "/Products/Category/Products-decoration", texto: "Products-decoration"},
     ]
 
     const menuRight = [

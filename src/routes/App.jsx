@@ -1,6 +1,6 @@
 import { useRoutes, BrowserRouter } from "react-router-dom"
 import { ShoppingProvider } from "../context"
-import { Home } from "../pages/Home"
+import { Products } from "../pages/Products"
 import { MyAccount } from "../pages/MyAccount"
 import { MyOrder } from "../pages/MyOrder"
 import { SignIn } from "../pages/SignIn"
@@ -8,11 +8,13 @@ import { Favorites } from "../pages/Favorites"
 import { NotFound } from "../pages/NotFound"
 import { Navbar } from "../components/Navbar"
 import { Layout } from "../components/Layout"
+import { Home } from "../pages/Home"
 
 const AppRoutes = () => {
   let routes = useRoutes([
-    { path: "/Products/All", element: <Home /> },
-    { path: "/Products/Category/:category", element: <Home /> },
+    { path: "/", element: <Home /> },
+    { path: "/Products/All", element: <Products /> },
+    { path: "/Products/Category/:category", element: <Products /> },
     { path: "/Products/Favorites", element: <Favorites /> },
     { path: "/MyAccount", element: <MyAccount /> },
     { path: "/MyOrder", element: <MyOrder /> },

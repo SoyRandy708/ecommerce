@@ -1,4 +1,5 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useEffect } from "react"
+import { AllProducts } from "../services"
 
 const ShoppingContext = createContext()
 
@@ -15,6 +16,15 @@ function ShoppingProvider({ children }) {
     const openProductDetail = () => setIsOpenProductDetail(true)
     const closeProductDetail = () => setIsOpenProductDetail(false)
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const productList = await AllProducts()
+            setProducts(productList)
+        }
+    
+        fetchData()
+    }, [])
+
     const filterProducts = products.filter(product => {
         const productoName = product.title.toLowerCase()
         const productCategory = product.category.toLowerCase()
@@ -25,7 +35,6 @@ function ShoppingProvider({ children }) {
             return product
         } else if(productoName.includes(filterName) && productCategory === filterCategory) {
             return product
-
         }
     })
 
