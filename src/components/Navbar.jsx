@@ -5,11 +5,53 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export function Navbar() {
     const {
+        signOut,
+        setSignOut,
         cartProducts,
         setSearchByCategory,
     } = useContext(ShoppingContext)
 
     const activeStyle = "underline underline-offset-4"
+    const signOutLocaleStorage = localStorage.getItem("sign-out")
+    const parsedSignOut = JSON.parse(signOutLocaleStorage)
+    const isUserSignOut = signOut || parsedSignOut
+
+    const renderView = () => {
+        if(isUserSignOut) {
+            return (
+                <li>
+                    <NavLink
+                        to={"/SignIn"}
+                        onClick={() => handleSignOut()}
+                    >
+                        Sign In
+                    </NavLink>
+                </li>
+            )
+        } else {
+            return (
+                <>
+                    <li>
+                        <NavLink
+                            to={"/SignIn"}
+                            onClick={() => handleSignOut()}
+                        >
+                            Sign Out
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink
+                            to={"/MyAccount"}
+                            onClick={() => handleSignOut()}
+                        >
+                            My Account
+                        </NavLink>
+                    </li>
+                </>
+            )
+        }
+    }
 
     const menuLeft = [
         {to: "/Products/All", texto: "All"},
@@ -22,9 +64,12 @@ export function Navbar() {
         {to: "/Products/Category/Products-decoration", texto: "Products-decoration"},
     ]
 
-    const menuRight = [
-        {to: "/MyAccount", texto: "MyAccount"},
-    ]
+    const handleSignOut = () => {
+        const stringifiedSignOut = JSON.stringify(true)
+        localStorage.setItem("sign-out" ,stringifiedSignOut)
+
+        setSignOut(true)
+    }
 
     const selectCategory = (event) => {
         setSearchByCategory(event.target.textContent)
@@ -47,6 +92,8 @@ export function Navbar() {
             </ul>
 
             <ul className="flex items-center gap-5">
+                {renderView()}
+
                 <li>
                     <NavLink
                         to={"/MyOrder"}
@@ -56,16 +103,6 @@ export function Navbar() {
                     </NavLink>
                 </li>
 
-                {menuRight.map(link => (
-                    <li key={link.texto}>
-                        <NavLink 
-                            to={link.to}
-                            className={({isActive}) => isActive ? activeStyle : ""}
-                        >
-                            {link.texto}
-                        </NavLink>
-                    </li>
-                ))} 
             </ul>
         </nav>
     )

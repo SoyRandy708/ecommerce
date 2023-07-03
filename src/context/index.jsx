@@ -3,7 +3,29 @@ import { AllProducts } from "../services"
 
 const ShoppingContext = createContext()
 
+function initialLocalStorage () {
+    const accountInLocalStorage = localStorage.getItem("account")
+    const signOutInLocalStorage = localStorage.getItem("sign-out")
+    let parsedAccount, parsedSignOut
+
+    if(!accountInLocalStorage) {
+        localStorage.setItem("account", JSON.stringify({}))
+        parsedAccount = {}   
+    } else {
+        parsedAccount = JSON.parse(accountInLocalStorage)
+    }
+
+    if(!signOutInLocalStorage) {
+        localStorage.setItem("sign-out", JSON.stringify(false))
+        parsedSignOut = false   
+    } else {
+        parsedSignOut = JSON.parse(signOutInLocalStorage)
+    }
+}
+
 function ShoppingProvider({ children }) {
+    const [account, setAccount] = useState({})
+    const [signOut, setSignOut] = useState(false)
     const [products, setProducts] = useState([])
     const [cartProducts, setCartProducts] = useState([])
     const [orders, setOrders] = useState([])
@@ -40,6 +62,10 @@ function ShoppingProvider({ children }) {
 
     return (
         <ShoppingContext.Provider value={{
+            account,
+            setAccount,
+            signOut,
+            setSignOut,
             products,
             setProducts,
             cartProducts,
@@ -64,4 +90,4 @@ function ShoppingProvider({ children }) {
     )
 }
 
-export { ShoppingContext, ShoppingProvider}
+export { ShoppingContext, ShoppingProvider, initialLocalStorage }
