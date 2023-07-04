@@ -24,8 +24,8 @@ function initialLocalStorage () {
 }
 
 function ShoppingProvider({ children }) {
-    const [account, setAccount] = useState({})
-    const [signOut, setSignOut] = useState(false)
+    const [accountState, setAccountState] = useState({})
+    const [signOutState, setSignOutState] = useState(false)
     const [products, setProducts] = useState([])
     const [cartProducts, setCartProducts] = useState([])
     const [orders, setOrders] = useState([])
@@ -62,10 +62,10 @@ function ShoppingProvider({ children }) {
 
     return (
         <ShoppingContext.Provider value={{
-            account,
-            setAccount,
-            signOut,
-            setSignOut,
+            accountState,
+            setAccountState,
+            signOutState,
+            setSignOutState,
             products,
             setProducts,
             cartProducts,
