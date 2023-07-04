@@ -1,5 +1,6 @@
-import { AiFillDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { AiFillDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"
 import { ShoppingContext } from "../context"
 
 export function MyOrder() {
@@ -8,8 +9,10 @@ export function MyOrder() {
         setCartProducts,
         orders,
         setOrders,
+        signOutState,
     } = useContext(ShoppingContext)
-
+    const redirection = useNavigate()
+    
     let totalPrice = 0
     const groupedProducts = [] 
 
@@ -48,8 +51,13 @@ export function MyOrder() {
     const cleanCart = () => {
         setCartProducts([])
     }
-
+    
     const addOrder = () => {
+        if(signOutState) {
+            redirection("/SignIn")
+            return
+        }
+
         const newOrder = {
             products: cartProducts,
             totalPrice: totalPrice,
