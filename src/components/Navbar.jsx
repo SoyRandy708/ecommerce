@@ -43,7 +43,6 @@ export function Navbar() {
                     <li>
                         <NavLink
                             to={"/MyAccount"}
-                            onClick={() => handleSignOut()}
                         >
                             My Account
                         </NavLink>
@@ -102,7 +101,6 @@ export function Navbar() {
                         {cartProducts.length}
                     </NavLink>
                 </li>
-
             </ul>
         </nav>
     )

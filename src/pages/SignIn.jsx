@@ -1,11 +1,13 @@
 import { useContext, useState, useRef } from "react"
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import { ShoppingContext } from "../context"
 import { Layout } from "../components/Layout"
 
 export function SignIn() {
     const  {
-        accountState
+        accountState,
+        setSignOutState,
+        setAccountState,
     } = useContext(ShoppingContext)
     const [view, setView] = useState("user-info")
     const form = useRef(null)
@@ -24,7 +26,19 @@ export function SignIn() {
             password: formData.get("password"),
         }
 
-        console.log(data)
+        const stringifiedAccount = JSON.stringify(data)
+        localStorage.setItem("account", stringifiedAccount)
+        setAccountState(data)
+
+        handleSignIn()
+    }
+
+    const handleSignIn = () => {
+        const stringifiedSignOut = JSON.stringify(false)
+        localStorage.setItem("sign-out", stringifiedSignOut)
+        setSignOutState(false)
+
+        return <Navigate replace to={"/"} />
     }
 
     const renderLogin = () => {
@@ -47,6 +61,7 @@ export function SignIn() {
                         <button
                             className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
                             disabled={!hasUserAnAccount}
+                            onClick={() => handleSignIn()}
                         >
                             Log in
                         </button>
