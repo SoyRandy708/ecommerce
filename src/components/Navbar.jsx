@@ -16,42 +16,6 @@ export function Navbar() {
     const parsedSignOut = JSON.parse(signOutLocaleStorage)
     const isUserSignOut = signOutState || parsedSignOut
 
-    const renderView = () => {
-        if(isUserSignOut) {
-            return (
-                <li>
-                    <NavLink
-                        to={"/SignIn"}
-                        onClick={() => handleSignOut()}
-                    >
-                        Sign In
-                    </NavLink>
-                </li>
-            )
-        } else {
-            return (
-                <>
-                    <li>
-                        <NavLink
-                            to={"/SignIn"}
-                            onClick={() => handleSignOut()}
-                        >
-                            Sign Out
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink
-                            to={"/MyAccount"}
-                        >
-                            My Account
-                        </NavLink>
-                    </li>
-                </>
-            )
-        }
-    }
-
     const menuLeft = [
         {to: "/Products/All", texto: "All"},
         {to: "/Products/Favorites", texto: "Favorites"},
@@ -91,7 +55,13 @@ export function Navbar() {
             </ul>
 
             <ul className="flex items-center gap-5">
-                {renderView()}
+                <li>
+                    <NavLink
+                        to={"/Account"}
+                    >
+                        Account
+                    </NavLink>
+                </li>
 
                 <li>
                     <NavLink

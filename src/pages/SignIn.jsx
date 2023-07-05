@@ -6,6 +6,7 @@ import { Layout } from "../components/Layout"
 export function SignIn() {
     const  {
         accountState,
+        signOutState,
         setSignOutState,
         setAccountState,
     } = useContext(ShoppingContext)
@@ -41,6 +42,42 @@ export function SignIn() {
         return <Navigate replace to={"/"} />
     }
 
+    const handleSignOut = () => {
+        const stringifiedSignOut = JSON.stringify(true)
+        localStorage.setItem("sign-out", stringifiedSignOut)
+        setSignOutState(true)
+
+        return <Navigate replace to={"/"} />
+    }
+
+    const renderButton = () => {
+        if(signOutState) {
+            return (
+                <Link to="/">
+                    <button
+                        className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
+                        disabled={!hasUserAnAccount}
+                        onClick={() => handleSignIn()}
+                    >
+                        Sign In
+                    </button>
+                </Link>
+            )
+        } else {
+            return (
+                <Link to="/">
+                    <button
+                        className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
+                        disabled={!hasUserAnAccount}
+                        onClick={() => handleSignOut()}
+                    >
+                        Sign Out
+                    </button>
+                </Link>
+            )
+        }
+    }
+
     const renderLogin = () => {
         return (
             <div className="flex flex-col gap-5 w-80">
@@ -57,15 +94,7 @@ export function SignIn() {
                 </div>
 
                 <div>
-                    <Link to="/">
-                        <button
-                            className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
-                            disabled={!hasUserAnAccount}
-                            onClick={() => handleSignIn()}
-                        >
-                            Log in
-                        </button>
-                    </Link>
+                    {renderButton()}
                     
                     <div className="text-center">
                         <a href="/" className="font-light text-sm underline underline-offset-4">Forgot my password</a>
