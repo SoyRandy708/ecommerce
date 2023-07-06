@@ -14,18 +14,15 @@ export function SignIn() {
     const [view, setView] = useState("user-info")
     const form = useRef(null)
 
-    const createAnAccount = () => {
+    const editAccount = () => {
         const formData = new FormData(form.current)
         const data = {
-            name: formData.get("name"),
+            username: formData.get("name"),
             email: formData.get("email"),
             password: formData.get("password"),
         }
 
-        const stringifiedAccount = JSON.stringify(data)
-        localStorage.setItem("account", stringifiedAccount)
         saveAccount(data)
-
         handleSignIn()
     }
 
@@ -55,15 +52,26 @@ export function SignIn() {
             )
         } else {
             return (
-                <Link to="/">
+                <div className="w-full flex gap-2">
+                    <Link to="/" className="w-full">
+                        <button
+                            className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
+                            disabled={!hasUserAnAccount}
+                            onClick={() => handleSignOut()}
+                        >
+                            Sign Out
+                        </button>
+                    </Link>
+
                     <button
                         className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
                         disabled={!hasUserAnAccount}
-                        onClick={() => handleSignOut()}
+                        // onClick={() => handleSignOut()}
+                        onClick={() => setView("edit-user-info")}
                     >
-                        Sign Out
+                        Edit
                     </button>
-                </Link>
+                </div>                
             )
         }
     }
@@ -73,13 +81,13 @@ export function SignIn() {
             <div className="flex flex-col gap-5 w-80">
                 <div>
                     <p>
-                        <span className="font-light text-sm">Email:</span>
-                        <span> {account?.email} </span>
+                        <span className="font-light text-sm">Username:</span>
+                        <span> {account?.username} </span>
                     </p>
 
                     <p>
-                        <span className="font-light text-sm">Password:</span>
-                        <span> {account?.password} </span>
+                        <span className="font-light text-sm">Email:</span>
+                        <span> {account?.email} </span>
                     </p>
                 </div>
 
@@ -94,7 +102,7 @@ export function SignIn() {
                 <button
                     className="w-full py-3 mt-2 border border-black disabled:border-black/40 disabled:text-black/40 rounded-lg"
                     disabled={hasUserAnAccount}
-                    onClick={() => setView("create-user-info")}
+                    onClick={() => setView("edit-user-info")}
                 >
                     Sign Up
                 </button>
@@ -102,16 +110,16 @@ export function SignIn() {
         )
     }
 
-    const renderCreateUserInfo = () => {
+    const renderEditUserInfo = () => {
         return (
             <form ref={form} className="flex flex-col gap-4 w-80">
                 <div className="flex flex-col gap-1">
-                    <label htmlFor="name" className="font-light text-sm">Your name:</label>
+                    <label htmlFor="name" className="font-light text-sm">Your username:</label>
                     <input 
                         type="text" 
                         id="name"
                         name="name"
-                        defaultValue={account?.name}
+                        defaultValue={account?.username}
                         placeholder="Randy"
                         className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
@@ -141,16 +149,16 @@ export function SignIn() {
                 <Link to="/">
                     <button
                         className="w-full py-3 rounded-lg bg-black text-white"
-                        onClick={() => createAnAccount()}
+                        onClick={() => editAccount()}
                     >
-                        Create
+                        {!hasUserAnAccount ? "Create" : "Edit"}
                     </button>
                 </Link>
             </form>
         )
     }
 
-    const renderView = () => view === "create-user-info" ? renderCreateUserInfo() : renderLogin()
+    const renderView = () => view === "edit-user-info" ? renderEditUserInfo() : renderLogin()
 
     return (
         <Layout className="bg-red-600" >

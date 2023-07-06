@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { ShoppingContext } from "../context";
 import { NavLink } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai"
+import { MdAccountCircle } from "react-icons/md"
 
 export function Navbar() {
     const {
+        account,
         cartProducts,
         setSearchByCategory,
     } = useContext(ShoppingContext)
@@ -47,7 +49,8 @@ export function Navbar() {
                     <NavLink
                         to={"/Account"}
                     >
-                        Account
+                        <MdAccountCircle  className="inline-block w-7 h-7 mr-1" />
+                        {account?.username}
                     </NavLink>
                 </li>
 
