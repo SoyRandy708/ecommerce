@@ -5,16 +5,11 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 
 export function Navbar() {
     const {
-        signOutState,
-        setSignOutState,
         cartProducts,
         setSearchByCategory,
     } = useContext(ShoppingContext)
 
     const activeStyle = "underline underline-offset-4"
-    const signOutLocaleStorage = localStorage.getItem("sign-out")
-    const parsedSignOut = JSON.parse(signOutLocaleStorage)
-    const isUserSignOut = signOutState || parsedSignOut
 
     const menuLeft = [
         {to: "/Products/All", texto: "All"},
@@ -26,13 +21,6 @@ export function Navbar() {
         {to: "/Products/Category/Groceries", texto: "Groceries"},
         {to: "/Products/Category/Products-decoration", texto: "Products-decoration"},
     ]
-
-    const handleSignOut = () => {
-        const stringifiedSignOut = JSON.stringify(true)
-        localStorage.setItem("sign-out", stringifiedSignOut)
-
-        setSignOutState(true)
-    }
 
     const selectCategory = (event) => {
         setSearchByCategory(event.target.textContent)

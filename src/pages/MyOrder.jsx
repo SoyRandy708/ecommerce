@@ -9,7 +9,7 @@ export function MyOrder() {
         setCartProducts,
         orders,
         setOrders,
-        signOutState,
+        signIn,
     } = useContext(ShoppingContext)
     const redirection = useNavigate()
     
@@ -53,7 +53,7 @@ export function MyOrder() {
     }
     
     const addOrder = () => {
-        if(signOutState) {
+        if(!signIn) {
             redirection("/SignIn")
             return
         }

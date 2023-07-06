@@ -5,19 +5,14 @@ import { Layout } from "../components/Layout"
 
 export function SignIn() {
     const  {
-        accountState,
-        signOutState,
-        setSignOutState,
-        setAccountState,
+        account,
+        saveAccount,
+        hasUserAnAccount,
+        signIn,
+        saveSignIn,
     } = useContext(ShoppingContext)
     const [view, setView] = useState("user-info")
     const form = useRef(null)
-
-    const accountLocalStorage = localStorage.getItem("account")
-    const parsedAccount = JSON.parse(accountLocalStorage)
-    const notAccountInLocaleStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
-    const notAccountInState = accountState ? Object.keys(accountState).length === 0 : true
-    const hasUserAnAccount = !notAccountInLocaleStorage || !notAccountInState
 
     const createAnAccount = () => {
         const formData = new FormData(form.current)
@@ -29,29 +24,24 @@ export function SignIn() {
 
         const stringifiedAccount = JSON.stringify(data)
         localStorage.setItem("account", stringifiedAccount)
-        setAccountState(data)
+        saveAccount(data)
 
         handleSignIn()
     }
 
     const handleSignIn = () => {
-        const stringifiedSignOut = JSON.stringify(false)
-        localStorage.setItem("sign-out", stringifiedSignOut)
-        setSignOutState(false)
-
+        saveSignIn(true)
         return <Navigate replace to={"/"} />
     }
 
     const handleSignOut = () => {
-        const stringifiedSignOut = JSON.stringify(true)
-        localStorage.setItem("sign-out", stringifiedSignOut)
-        setSignOutState(true)
+        saveSignIn(false)
 
         return <Navigate replace to={"/"} />
     }
 
     const renderButton = () => {
-        if(signOutState) {
+        if(!signIn) {
             return (
                 <Link to="/">
                     <button
@@ -84,12 +74,12 @@ export function SignIn() {
                 <div>
                     <p>
                         <span className="font-light text-sm">Email:</span>
-                        <span> {parsedAccount?.email} </span>
+                        <span> {account?.email} </span>
                     </p>
 
                     <p>
                         <span className="font-light text-sm">Password:</span>
-                        <span> {parsedAccount?.password} </span>
+                        <span> {account?.password} </span>
                     </p>
                 </div>
 
@@ -121,7 +111,7 @@ export function SignIn() {
                         type="text" 
                         id="name"
                         name="name"
-                        defaultValue={parsedAccount?.name}
+                        defaultValue={account?.name}
                         placeholder="Randy"
                         className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
@@ -132,7 +122,7 @@ export function SignIn() {
                         type="email" 
                         id="email"
                         name="email"
-                        defaultValue={parsedAccount?.email}
+                        defaultValue={account?.email}
                         placeholder="hi@helloworld.com"
                         className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
@@ -143,7 +133,7 @@ export function SignIn() {
                         type="text" 
                         id="password"
                         name="password"
-                        defaultValue={parsedAccount?.password}
+                        defaultValue={account?.password}
                         placeholder="******"
                         className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />

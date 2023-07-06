@@ -1,31 +1,10 @@
 import { createContext, useState, useEffect } from "react"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 import { AllProducts } from "../services"
 
 const ShoppingContext = createContext()
 
-function initialLocalStorage () {
-    const accountInLocalStorage = localStorage.getItem("account")
-    const signOutInLocalStorage = localStorage.getItem("sign-out")
-    let parsedAccount, parsedSignOut
-
-    if(!accountInLocalStorage) {
-        localStorage.setItem("account", JSON.stringify({}))
-        parsedAccount = {}   
-    } else {
-        parsedAccount = JSON.parse(accountInLocalStorage)
-    }
-
-    if(!signOutInLocalStorage) {
-        localStorage.setItem("sign-out", JSON.stringify(false))
-        parsedSignOut = false   
-    } else {
-        parsedSignOut = JSON.parse(signOutInLocalStorage)
-    }
-}
-
 function ShoppingProvider({ children }) {
-    const [accountState, setAccountState] = useState({})
-    const [signOutState, setSignOutState] = useState(false)
     const [products, setProducts] = useState([])
     const [cartProducts, setCartProducts] = useState([])
     const [orders, setOrders] = useState([])
@@ -34,6 +13,18 @@ function ShoppingProvider({ children }) {
     const [productToShow, setProductToShow] = useState({})
     const [searchByTitle, setSearchByTitle] = useState("")
     const [searchByCategory, setSearchByCategory] = useState("")
+
+    const {
+        item: account,
+        saveItem: saveAccount,
+    } = useLocalStorage("account", {})
+
+    const {
+        item: signIn,
+        saveItem: saveSignIn,
+    } = useLocalStorage("signIn", false)
+
+    const hasUserAnAccount = Object.keys(account).length !== 0
 
     const openProductDetail = () => setIsOpenProductDetail(true)
     const closeProductDetail = () => setIsOpenProductDetail(false)
@@ -62,10 +53,11 @@ function ShoppingProvider({ children }) {
 
     return (
         <ShoppingContext.Provider value={{
-            accountState,
-            setAccountState,
-            signOutState,
-            setSignOutState,
+            account, 
+            saveAccount,
+            hasUserAnAccount,
+            signIn,
+            saveSignIn,
             products,
             setProducts,
             cartProducts,
@@ -90,4 +82,4 @@ function ShoppingProvider({ children }) {
     )
 }
 
-export { ShoppingContext, ShoppingProvider, initialLocalStorage }
+export { ShoppingContext, ShoppingProvider }
