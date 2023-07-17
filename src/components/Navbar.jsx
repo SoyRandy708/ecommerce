@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ShoppingContext } from "../context";
 import { NavLink } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai"
@@ -21,12 +21,27 @@ export function Navbar() {
         {to: "/Products/Category/Fragrances", texto: "Fragrances"},
         {to: "/Products/Category/Skincare", texto: "Skincare"},
         {to: "/Products/Category/Groceries", texto: "Groceries"},
-        {to: "/Products/Category/Products-decoration", texto: "Products-decoration"},
     ]
 
-    const selectCategory = (event) => {
-        setSearchByCategory(event.target.textContent)
+    const selectCategory = () => {
+        setTimeout(() => {
+            const path = window.location.pathname
+    
+            if (path.includes("All")) {
+                setSearchByCategory("ALL")
+
+            } else if (path.includes("Favorites")) {
+                setSearchByCategory("Favorites")
+            } else {
+                const categoria = path.slice(19)
+                setSearchByCategory(categoria)
+            }
+        }, 0)
     }
+
+    useEffect(() => {
+        selectCategory()
+    }, [])
 
     return (
         <nav className="w-full h-[60px] flex justify-between items-center fixed top-0 z-10 py-5 px-8 text-base bg-violet-200"> 
@@ -35,7 +50,7 @@ export function Navbar() {
                     <li key={link.texto} >
                         <NavLink 
                             to={link.to}
-                            onClick={(event) => selectCategory(event)}
+                            onClick={() => selectCategory()}
                             className={({isActive}) => isActive ? activeStyle : ""}
                         >
                             {link.texto}
