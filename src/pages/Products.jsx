@@ -7,21 +7,35 @@ import { ProductDetail } from "../components/ProductDetail"
 export function Products() {
     const {
         setSearchByTitle,
-        filterProducts,
+        searchByTitle,
+        searchByCategory,
+        products,
     } = useContext(ShoppingContext)
 
     const changeSearchTitle = (event) => {
         setSearchByTitle(event.target.value)
     }
 
+    const filterProducts = products.filter(product => {
+        const productoName = product.title.toLowerCase()
+        const productCategory = product.category.toLowerCase()
+        const filterName = searchByTitle.toLowerCase()
+        const filterCategory = searchByCategory.toLowerCase()
+
+        if(productoName.includes(filterName) && filterCategory === "all") {
+            return product
+        } else if(productoName.includes(filterName) && productCategory === filterCategory) {
+            return product
+        }
+    })
+
     return (
         <>
-            <h1 className="m-4 text-2xl font-bold">Products</h1>
-
             <input 
                 type="text"
+                value={searchByTitle}
                 placeholder="Busca tu producto..."
-                className="w-full max-w-sm p-3 mb-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
+                className="w-full max-w-sm p-3 m-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
                 onChange={(event) => changeSearchTitle(event)}
             />
 

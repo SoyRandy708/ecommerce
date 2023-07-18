@@ -5,15 +5,35 @@ import { Cards } from "../components/Cards"
 
 export function Favorites() {
     const {
+        setSearchByTitle,
+        searchByTitle,
         favorites,
     } = useContext(ShoppingContext)
 
+    const changeSearchTitle = (event) => {
+        setSearchByTitle(event.target.value)
+    }
+    const filterFavoriteProducts = favorites.filter(product => {
+        const productoName = product.title.toLowerCase()
+        const filterName = searchByTitle.toLowerCase()
+
+        if(productoName.includes(filterName)) {
+            return product
+        }
+    })
+
     return (
         <>
-            <h1 className="m-4 text-2xl font-bold">Productos Favoritos</h1>
+            <input 
+                type="text"
+                value={searchByTitle}
+                placeholder="Busca tu producto..."
+                className="w-full max-w-sm p-3 m-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
+                onChange={(event) => changeSearchTitle(event)}
+            />
 
             <Cards>
-                {favorites.map(product => (
+                {filterFavoriteProducts.map(product => (
                     <Card 
                         key={product.id}
                         data={product}

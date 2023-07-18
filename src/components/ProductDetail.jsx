@@ -5,12 +5,12 @@ import { ShoppingContext } from "../context"
 export function ProductDetail() {
     const {
         isOpenProductDetail,
-        closeProductDetail,
-        productToShow
+        setIsOpenProductDetail,
+        productToShow,
     } = useContext(ShoppingContext)
 
     const close = () => {
-        closeProductDetail()
+        setIsOpenProductDetail(false)
     }
 
     return (

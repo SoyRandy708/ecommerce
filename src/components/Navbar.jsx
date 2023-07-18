@@ -7,6 +7,7 @@ import { MdAccountCircle } from "react-icons/md"
 export function Navbar() {
     const {
         account,
+        signIn,
         cartProducts,
         setSearchByCategory,
     } = useContext(ShoppingContext)
@@ -14,6 +15,7 @@ export function Navbar() {
     const activeStyle = "underline underline-offset-4"
 
     const menuLeft = [
+        {to: "/", texto: "Home"},
         {to: "/Products/All", texto: "All"},
         {to: "/Products/Favorites", texto: "Favorites"},
         {to: "/Products/Category/Smartphones", texto: "Smartphones"},
@@ -65,7 +67,7 @@ export function Navbar() {
                         to={"/Account"}
                     >
                         <MdAccountCircle  className="inline-block w-7 h-7 mr-1" />
-                        {account?.username}
+                        {signIn ? account?.username : ""}
                     </NavLink>
                 </li>
 

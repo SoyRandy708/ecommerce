@@ -8,8 +8,8 @@ export function Card({ data, title, price, category, image, description }) {
         setCartProducts,
         favorites,
         setFavorites,
-        openProductDetail,
         setProductToShow,
+        setIsOpenProductDetail,
     } = useContext(ShoppingContext)
 
     const addToCart = (product) => {
@@ -29,7 +29,7 @@ export function Card({ data, title, price, category, image, description }) {
 
     const previewProduct = (product) => {
         setProductToShow(product)
-        openProductDetail()
+        setIsOpenProductDetail(true)
     }
 
     return (

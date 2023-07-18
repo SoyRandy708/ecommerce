@@ -26,9 +26,6 @@ function ShoppingProvider({ children }) {
 
     const hasUserAnAccount = Object.keys(account).length !== 0
 
-    const openProductDetail = () => setIsOpenProductDetail(true)
-    const closeProductDetail = () => setIsOpenProductDetail(false)
-
     useEffect(() => {
         const fetchData = async () => {
             const productList = await AllProducts()
@@ -37,19 +34,6 @@ function ShoppingProvider({ children }) {
     
         fetchData()
     }, [])
-
-    const filterProducts = products.filter(product => {
-        const productoName = product.title.toLowerCase()
-        const productCategory = product.category.toLowerCase()
-        const filterName = searchByTitle.toLowerCase()
-        const filterCategory = searchByCategory.toLowerCase()
-
-        if(productoName.includes(filterName) && filterCategory === "all") {
-            return product
-        } else if(productoName.includes(filterName) && productCategory === filterCategory) {
-            return product
-        }
-    })
 
     return (
         <ShoppingContext.Provider value={{
@@ -66,16 +50,14 @@ function ShoppingProvider({ children }) {
             setOrders,
             favorites,
             setFavorites,
-            openProductDetail,
-            closeProductDetail,
             isOpenProductDetail,
+            setIsOpenProductDetail,
             productToShow,
             setProductToShow,
             searchByTitle,
             setSearchByTitle,
             searchByCategory,
             setSearchByCategory,
-            filterProducts,
         }}>
             {children}
         </ShoppingContext.Provider>
