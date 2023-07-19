@@ -1,7 +1,6 @@
 import { useContext, useState, useRef } from "react"
 import { Link, Navigate } from "react-router-dom"
 import { ShoppingContext } from "../context"
-import { Layout } from "../components/Layout"
 
 export function SignIn() {
     const  {
@@ -66,7 +65,6 @@ export function SignIn() {
                     <button
                         className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
                         disabled={!hasUserAnAccount}
-                        // onClick={() => handleSignOut()}
                         onClick={() => setView("edit-user-info")}
                     >
                         Edit
@@ -80,14 +78,14 @@ export function SignIn() {
         return (
             <div className="flex flex-col gap-5 w-80">
                 <div>
-                    <p>
-                        <span className="font-light text-sm">Username:</span>
-                        <span> {account?.username} </span>
+                    <p className="font-light text-lg">
+                        Username:
+                        <span className="font-medium"> {account?.username} </span>
                     </p>
 
-                    <p>
-                        <span className="font-light text-sm">Email:</span>
-                        <span> {account?.email} </span>
+                    <p className="font-light text-lg">
+                        Email:
+                        <span className="font-medium"> {account?.email} </span>
                     </p>
                 </div>
 
@@ -146,14 +144,23 @@ export function SignIn() {
                         className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
                 </div>
-                <Link to="/">
+                <div className="w-full flex gap-2">
                     <button
                         className="w-full py-3 rounded-lg bg-black text-white"
-                        onClick={() => editAccount()}
+                        onClick={() => setView("user-info")}
                     >
-                        {!hasUserAnAccount ? "Create" : "Edit"}
+                        Cancel
                     </button>
-                </Link>
+
+                    <Link to="/" className="w-full">
+                        <button
+                            className="w-full py-3 rounded-lg bg-black text-white"
+                            onClick={() => editAccount()}
+                        >
+                            {!hasUserAnAccount ? "Create" : "Edit"}
+                        </button>
+                    </Link>
+                </div>
             </form>
         )
     }
@@ -161,10 +168,10 @@ export function SignIn() {
     const renderView = () => view === "edit-user-info" ? renderEditUserInfo() : renderLogin()
 
     return (
-        <Layout className="bg-red-600" >
-            <h1 className="font-medium text-xl text-center">Welcome</h1>
+            <div className="flex flex-col justify-center gap-6 min-h-[calc(100vh-120px)]">
+                <h1 className="title">Welcome</h1>
 
-            {renderView()}
-        </Layout>
+                {renderView()}
+            </div>
     )
 }

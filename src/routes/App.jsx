@@ -3,7 +3,6 @@ import { ShoppingProvider } from "../context"
 import { Products } from "../pages/Products"
 import { Account } from "../pages/Account"
 import { MyOrder } from "../pages/MyOrder"
-import { SignIn } from "../pages/SignIn"
 import { Favorites } from "../pages/Favorites"
 import { NotFound } from "../pages/NotFound"
 import { Navbar } from "../components/Navbar"
@@ -18,7 +17,6 @@ const AppRoutes = () => {
     { path: "/Products/Favorites", element: <Favorites /> },
     { path: "/Account", element: <Account /> },
     { path: "/MyOrder", element: <MyOrder /> },
-    { path: "/SignIn", element: <SignIn /> },
     { path: "/*", element: <NotFound /> },
   ])
 
