@@ -5,26 +5,26 @@ import { SignIn } from "../components/SignIn"
 
 export function Account() {
     const {
-        orders,
+        account,
         signIn,
     } = useContext(ShoppingContext)
 
     const renderOrders = () => {
-        if (signIn) {
-            return (
-                <div className="flex flex-col items-center gap-3 w-full mt-20">
-                    <h2 className="title">My Orders</h2>
-                    {orders.map(order => 
-                        <OrderCard 
-                            key={order.date}
-                            date={order.date}
-                            price={order.totalPrice}
-                            products={order.products}
-                        />   
-                    )}
-                </div>
-            )
-        }
+        return signIn ? (
+            <div className="flex flex-col items-center gap-3 w-full mt-20">
+                <h2 className="title">My Orders</h2>
+                {account?.orders.map(order => 
+                    <OrderCard 
+                        key={order.date}
+                        date={order.date}
+                        price={order.totalPrice}
+                        products={order.products}
+                    />   
+                )}
+            </div>
+        ) : (
+            ""
+        )
     }
 
     return (

@@ -7,8 +7,8 @@ export function MyOrder() {
     const {
         cartProducts,
         setCartProducts,
-        orders,
-        setOrders,
+        saveAccount,
+        account,
         signIn,
     } = useContext(ShoppingContext)
     const redirection = useNavigate()
@@ -54,7 +54,7 @@ export function MyOrder() {
     
     const addOrder = () => {
         if(!signIn) {
-            redirection("/SignIn")
+            redirection("/Account")
             return
         }
 
@@ -64,7 +64,12 @@ export function MyOrder() {
             date: Date(),
         }
 
-        setOrders([newOrder, ...orders])
+        const data = {
+            ...account,
+            orders: [newOrder, ...account?.orders],
+        }
+
+        saveAccount(data)
         cleanCart()
     }
 

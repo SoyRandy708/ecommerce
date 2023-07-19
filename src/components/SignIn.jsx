@@ -19,6 +19,7 @@ export function SignIn() {
             username: formData.get("name"),
             email: formData.get("email"),
             password: formData.get("password"),
+            orders: Array.isArray(account?.orders) ? [...account.orders] : [],
         }
 
         saveAccount(data)
@@ -78,12 +79,12 @@ export function SignIn() {
         return (
             <div className="flex flex-col gap-5 w-80">
                 <div>
-                    <p className="font-light text-lg">
+                    <p className="font-light">
                         Username:
                         <span className="font-medium"> {account?.username} </span>
                     </p>
 
-                    <p className="font-light text-lg">
+                    <p className="font-light">
                         Email:
                         <span className="font-medium"> {account?.email} </span>
                     </p>
@@ -168,7 +169,7 @@ export function SignIn() {
     const renderView = () => view === "edit-user-info" ? renderEditUserInfo() : renderLogin()
 
     return (
-            <div className="flex flex-col justify-center gap-6 min-h-[calc(100vh-120px)]">
+            <div className="flex flex-col justify-center gap-4 min-h-[calc(100vh-120px)]">
                 <h1 className="title">Welcome</h1>
 
                 {renderView()}

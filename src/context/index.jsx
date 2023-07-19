@@ -7,7 +7,6 @@ const ShoppingContext = createContext()
 function ShoppingProvider({ children }) {
     const [products, setProducts] = useState([])
     const [cartProducts, setCartProducts] = useState([])
-    const [orders, setOrders] = useState([])
     const [favorites, setFavorites] = useState([])
     const [isOpenProductDetail, setIsOpenProductDetail] = useState(false)
     const [productToShow, setProductToShow] = useState({})
@@ -46,8 +45,6 @@ function ShoppingProvider({ children }) {
             setProducts,
             cartProducts,
             setCartProducts,
-            orders,
-            setOrders,
             favorites,
             setFavorites,
             isOpenProductDetail,
