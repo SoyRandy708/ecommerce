@@ -7,7 +7,6 @@ const ShoppingContext = createContext()
 function ShoppingProvider({ children }) {
     const [products, setProducts] = useState([])
     const [cartProducts, setCartProducts] = useState([])
-    const [favorites, setFavorites] = useState([])
     const [isOpenProductDetail, setIsOpenProductDetail] = useState(false)
     const [productToShow, setProductToShow] = useState({})
     const [searchByTitle, setSearchByTitle] = useState("")
@@ -16,7 +15,13 @@ function ShoppingProvider({ children }) {
     const {
         item: account,
         saveItem: saveAccount,
-    } = useLocalStorage("account", {})
+    } = useLocalStorage("account", {
+        username: "",
+        email: "",
+        password: "",
+        orders: [],
+        favorites: [],
+    })
 
     const {
         item: signIn,
@@ -45,8 +50,6 @@ function ShoppingProvider({ children }) {
             setProducts,
             cartProducts,
             setCartProducts,
-            favorites,
-            setFavorites,
             isOpenProductDetail,
             setIsOpenProductDetail,
             productToShow,

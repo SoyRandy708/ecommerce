@@ -6,8 +6,8 @@ export function Card({ data, title, price, category, image, description }) {
     const {
         cartProducts, 
         setCartProducts,
-        favorites,
-        setFavorites,
+        account,
+        saveAccount,
         setProductToShow,
         setIsOpenProductDetail,
     } = useContext(ShoppingContext)
@@ -17,14 +17,23 @@ export function Card({ data, title, price, category, image, description }) {
     }
 
     const addToFavorite = (product) => {
-        setFavorites([...favorites, product])
+        const data = {
+            ...account,
+            favorites: [product, ...account?.favorites],
+        }
+        saveAccount(data)
     }
 
     const deleteToFavorite = (product) => {
-        const newFavorites = [...favorites]
+        const newFavorites = [...account?.favorites]
         const index = newFavorites.findIndex(pro => pro.title === product.title)
         newFavorites.splice(index, 1)
-        setFavorites(newFavorites)
+        
+        const data = {
+            ...account,
+            favorites: [...newFavorites],
+        }
+        saveAccount(data)
     }
 
     const previewProduct = (product) => {
@@ -34,7 +43,7 @@ export function Card({ data, title, price, category, image, description }) {
 
     return (
         <figure className="relative w-full h-auto bg-blue-200 shadow-xl rounded-xl overflow-hidden">
-            {favorites.find(pro => pro.title === title) ? 
+            {account?.favorites.find(pro => pro.title === title) ? 
                 <AiFillHeart 
                     onClick={() => deleteToFavorite(data)}
                     className="absolute top-2 right-2 w-7 h-7 text-red-700 cursor-pointer hover:scale-125 duration-200 ease-in"

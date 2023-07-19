@@ -7,13 +7,13 @@ export function Favorites() {
     const {
         setSearchByTitle,
         searchByTitle,
-        favorites,
+        account,
     } = useContext(ShoppingContext)
 
     const changeSearchTitle = (event) => {
         setSearchByTitle(event.target.value)
     }
-    const filterFavoriteProducts = favorites.filter(product => {
+    const filterFavoriteProducts = account?.favorites.filter(product => {
         const productoName = product.title.toLowerCase()
         const filterName = searchByTitle.toLowerCase()
 

@@ -20,6 +20,7 @@ export function SignIn() {
             email: formData.get("email"),
             password: formData.get("password"),
             orders: Array.isArray(account?.orders) ? [...account.orders] : [],
+            favorites: Array.isArray(account?.favorites) ? [...account.favorites] : [],
         }
 
         saveAccount(data)
