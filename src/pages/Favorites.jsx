@@ -8,6 +8,7 @@ export function Favorites() {
         setSearchByTitle,
         searchByTitle,
         account,
+        signIn,
     } = useContext(ShoppingContext)
 
     const changeSearchTitle = (event) => {
@@ -22,16 +23,8 @@ export function Favorites() {
         }
     })
 
-    return (
-        <>
-            <input 
-                type="text"
-                value={searchByTitle}
-                placeholder="Busca tu producto..."
-                className="w-full max-w-sm p-3 m-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
-                onChange={(event) => changeSearchTitle(event)}
-            />
-
+    const isUserSignIn = () => {
+        return signIn ? (
             <Cards>
                 {filterFavoriteProducts.map(product => (
                     <Card 
@@ -45,6 +38,24 @@ export function Favorites() {
                     />
                 ))}
             </Cards>
+        ) : (
+            <p className="messages">
+                Tienes que iniciar sesion para poder guardar tus productos favoritos.
+            </p>
+        )
+    }
+
+    return (
+        <>
+            <input 
+                type="text"
+                value={searchByTitle}
+                placeholder="Busca tu producto..."
+                className="w-full max-w-sm p-3 m-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
+                onChange={(event) => changeSearchTitle(event)}
+            />
+
+            {isUserSignIn()}
         </>
     )
 }

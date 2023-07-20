@@ -1,5 +1,4 @@
 import { useContext, useState, useRef } from "react"
-import { Link, Navigate } from "react-router-dom"
 import { ShoppingContext } from "../context"
 
 export function SignIn() {
@@ -24,45 +23,30 @@ export function SignIn() {
         }
 
         saveAccount(data)
-        handleSignIn()
-    }
-
-    const handleSignIn = () => {
-        saveSignIn(true)
-        return <Navigate replace to={"/"} />
-    }
-
-    const handleSignOut = () => {
-        saveSignIn(false)
-
-        return <Navigate replace to={"/"} />
+        setView("user-info")
     }
 
     const renderButton = () => {
         if(!signIn) {
             return (
-                <Link to="/">
-                    <button
-                        className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
-                        disabled={!hasUserAnAccount}
-                        onClick={() => handleSignIn()}
-                    >
-                        Sign In
-                    </button>
-                </Link>
+                <button
+                    className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
+                    disabled={!hasUserAnAccount}
+                    onClick={() => saveSignIn(true)}
+                >
+                    Sign In
+                </button>
             )
         } else {
             return (
                 <div className="w-full flex gap-2">
-                    <Link to="/" className="w-full">
-                        <button
-                            className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
-                            disabled={!hasUserAnAccount}
-                            onClick={() => handleSignOut()}
-                        >
-                            Sign Out
-                        </button>
-                    </Link>
+                    <button
+                        className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
+                        disabled={!hasUserAnAccount}
+                        onClick={() => saveSignIn(false)}
+                    >
+                        Sign Out
+                    </button>
 
                     <button
                         className="w-full py-3 bg-black disabled:bg-black/40 text-white rounded-lg"
@@ -154,14 +138,12 @@ export function SignIn() {
                         Cancel
                     </button>
 
-                    <Link to="/" className="w-full">
-                        <button
-                            className="w-full py-3 rounded-lg bg-black text-white"
-                            onClick={() => editAccount()}
-                        >
-                            {!hasUserAnAccount ? "Create" : "Edit"}
-                        </button>
-                    </Link>
+                    <button
+                        className="w-full py-3 rounded-lg bg-black text-white"
+                        onClick={() => editAccount()}
+                    >
+                        {!hasUserAnAccount ? "Create" : "Edit"}
+                    </button>
                 </div>
             </form>
         )
