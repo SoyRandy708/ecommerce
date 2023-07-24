@@ -28,7 +28,7 @@ function ShoppingProvider({ children }) {
         saveItem: saveSignIn,
     } = useLocalStorage("signIn", false)
 
-    const hasUserAnAccount = Object.keys(account).length !== 0
+    const hasUserAnAccount = Object.keys(account.username).length !== 0
 
     useEffect(() => {
         const fetchData = async () => {

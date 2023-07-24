@@ -12,18 +12,30 @@ export function SignIn() {
     const [view, setView] = useState("user-info")
     const form = useRef(null)
 
-    const editAccount = () => {
-        const formData = new FormData(form.current)
-        const data = {
-            username: formData.get("name"),
-            email: formData.get("email"),
-            password: formData.get("password"),
-            orders: Array.isArray(account?.orders) ? [...account.orders] : [],
-            favorites: Array.isArray(account?.favorites) ? [...account.favorites] : [],
-        }
+    const editAccount = (event) => {
+        event.preventDefault()
 
-        saveAccount(data)
-        setView("user-info")
+        const formData = Object.fromEntries(new FormData(form.current))
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+        if (
+            formData.username.length > 4 &&
+            emailRegex.test(formData.email) &&
+            formData.password.length > 5 
+        ) {
+            const data = {
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                orders: Array.isArray(account?.orders) ? [...account.orders] : [],
+                favorites: Array.isArray(account?.favorites) ? [...account.favorites] : [],
+            }
+
+            setView("user-info")
+            saveAccount(data)
+        } else {
+            // Enviar mensaje flotante
+        }        
     }
 
     const renderButton = () => {
@@ -101,8 +113,8 @@ export function SignIn() {
                     <label htmlFor="name" className="font-light text-sm">Your username:</label>
                     <input 
                         type="text" 
-                        id="name"
-                        name="name"
+                        id="username"
+                        name="username"
                         defaultValue={account?.username}
                         placeholder="Randy"
                         className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
@@ -140,7 +152,7 @@ export function SignIn() {
 
                     <button
                         className="w-full py-3 rounded-lg bg-black text-white"
-                        onClick={() => editAccount()}
+                        onClick={(event) => editAccount(event)}
                     >
                         {!hasUserAnAccount ? "Create" : "Edit"}
                     </button>
