@@ -26,30 +26,38 @@ export function Favorites() {
     const isUserSignIn = () => {
         return signIn ? (
             <>
-                <input 
-                    type="text"
-                    value={searchByTitle}
-                    placeholder="Busca tu producto..."
-                    className="w-full max-w-sm p-3 m-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
-                    onChange={(event) => changeSearchTitle(event)}
-                />
-
-                <Cards>
-                    {filterFavoriteProducts.map(product => (
-                        <Card 
-                            key={product.id}
-                            data={product}
-                            title={product.title}
-                            price={product.price}
-                            category={product.category}
-                            image={product.images[0]}
-                            description={product.description}
+                {filterFavoriteProducts.length === 0 ? (
+                    <p className="grid min-h-[calc(100vh-120px)] items-center message">
+                        Todavía no tienes ningún producto favorito
+                    </p>
+                ) : (
+                    <>
+                        <input 
+                            type="text"
+                            value={searchByTitle}
+                            placeholder="Busca tu producto..."
+                            className="w-full max-w-sm p-3 m-5 border-2 border-black outline-none rounded-lg focus:border-blue-800"
+                            onChange={(event) => changeSearchTitle(event)}
                         />
-                    ))}
-                </Cards>
+
+                        <Cards>
+                            {filterFavoriteProducts.map(product => (
+                                <Card 
+                                    key={product.id}
+                                    data={product}
+                                    title={product.title}
+                                    price={product.price}
+                                    category={product.category}
+                                    image={product.images[0]}
+                                    description={product.description}
+                                />
+                            ))}
+                        </Cards>
+                    </>
+                )}
             </>
         ) : (
-            <p className="grid min-h-[calc(100vh-120px)] items-center messages">
+            <p className="grid min-h-[calc(100vh-120px)] items-center message">
                 Tienes que iniciar sesión para poder guardar tus productos favoritos.
             </p>
         )

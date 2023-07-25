@@ -37,6 +37,7 @@ export function SignIn() {
 
             if (!hasUserAnAccount) {
                 toast.success("La cuenta se creó correctamente")
+                saveSignIn(true)
             } else {
                 toast.success("La cuenta se modificó correctamente")
             }

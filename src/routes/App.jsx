@@ -30,7 +30,7 @@ function App() {
     <ShoppingProvider>      
       <BrowserRouter>
         <Navbar />
-        <Toaster richColors />
+        <Toaster richColors duration={2500} />
         <Layout >
           <AppRoutes />
         </Layout>

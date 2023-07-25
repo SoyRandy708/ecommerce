@@ -78,8 +78,11 @@ export function MyOrder() {
 
     return (
         <>
-            <h1>MyOrder</h1>
-            {groupedProducts.length === 0 ? "SIN PRODUCTOS" :
+            {groupedProducts.length === 0 ? (
+                <p className="grid min-h-[calc(100vh-120px)] items-center message">
+                    Todavía no tienes productos en el carrito
+                </p>
+            ) :
                 <div className="relative flex flex-wrap justify-center gap-3">
                     <nav className="w-9/12 max-w-3xl">
                         <ul className="grid grid-cols-[120px_1fr_1fr_1fr_40px] gap-2 place-items-center w-full font-bold">
