@@ -1,11 +1,13 @@
 import { useContext } from "react"
 import { ShoppingContext } from "../context"
 import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
+import { toast } from "sonner"
 
 export function Card({ data, title, price, category, image, description }) {
     const {
         cartProducts, 
         setCartProducts,
+        signIn,
         account,
         saveAccount,
         setProductToShow,
@@ -14,14 +16,20 @@ export function Card({ data, title, price, category, image, description }) {
 
     const addToCart = (product) => {
         setCartProducts([...cartProducts, product])
+        toast.success("Producto agregado al carrito")
     }
 
     const addToFavorite = (product) => {
-        const data = {
-            ...account,
-            favorites: [product, ...account?.favorites],
+        if(!signIn) {
+            toast.error("Inicia sesión para poder guardar tus productos favoritos")
+        } else {
+            const data = {
+                ...account,
+                favorites: [product, ...account?.favorites],
+            }
+            saveAccount(data)
+            toast.success("Producto agregado a favoritos")
         }
-        saveAccount(data)
     }
 
     const deleteToFavorite = (product) => {
@@ -34,6 +42,7 @@ export function Card({ data, title, price, category, image, description }) {
             favorites: [...newFavorites],
         }
         saveAccount(data)
+        toast.error("Producto eliminado de favoritos")
     }
 
     const previewProduct = (product) => {
@@ -41,19 +50,30 @@ export function Card({ data, title, price, category, image, description }) {
         setIsOpenProductDetail(true)
     }
 
-    return (
-        <figure className="relative w-full h-auto bg-blue-200 shadow-xl rounded-xl overflow-hidden">
-            {account?.favorites.find(pro => pro.title === title) ? 
+    const renderIconCard = () => {
+        return !signIn ? (
+            <AiOutlineHeart 
+                className="absolute top-2 right-2 w-7 h-7 text-red-700 cursor-pointer hover:scale-125 duration-200 ease-in"
+                onClick={() => addToFavorite(data)}
+            />
+        ) : (
+            account?.favorites.find(pro => pro.title === title) ? (
                 <AiFillHeart 
                     onClick={() => deleteToFavorite(data)}
                     className="absolute top-2 right-2 w-7 h-7 text-red-700 cursor-pointer hover:scale-125 duration-200 ease-in"
                 />
-            : 
+            ) : (
                 <AiOutlineHeart 
                     onClick={() => addToFavorite(data)}
                     className="absolute top-2 right-2 w-7 h-7 text-red-700 cursor-pointer hover:scale-125 duration-200 ease-in"   
                 />
-            }
+            )
+        )
+    }
+
+    return (
+        <figure className="relative w-full h-auto bg-blue-200 shadow-xl rounded-xl overflow-hidden">
+            {renderIconCard()}
             <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2"> {category} </p>
 
             <img 

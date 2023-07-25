@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AiFillDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"
 import { ShoppingContext } from "../context"
+import { toast } from "sonner"
 
 export function MyOrder() {
     const {
@@ -55,6 +56,7 @@ export function MyOrder() {
     const addOrder = () => {
         if(!signIn) {
             redirection("/Account")
+            toast.error("Inicia sesión para poder continuar la compra")
             return
         }
 
@@ -71,6 +73,7 @@ export function MyOrder() {
 
         saveAccount(data)
         cleanCart()
+        toast.success("Compra realizada correctamente")
     }
 
     return (

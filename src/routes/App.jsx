@@ -8,6 +8,7 @@ import { NotFound } from "../pages/NotFound"
 import { Navbar } from "../components/Navbar"
 import { Layout } from "../components/Layout"
 import { Home } from "../pages/Home"
+import { Toaster } from "sonner"
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -29,6 +30,7 @@ function App() {
     <ShoppingProvider>      
       <BrowserRouter>
         <Navbar />
+        <Toaster richColors />
         <Layout >
           <AppRoutes />
         </Layout>

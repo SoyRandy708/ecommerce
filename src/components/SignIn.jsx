@@ -1,5 +1,6 @@
 import { useContext, useState, useRef } from "react"
 import { ShoppingContext } from "../context"
+import { toast } from "sonner"
 
 export function SignIn() {
     const  {
@@ -33,8 +34,14 @@ export function SignIn() {
 
             setView("user-info")
             saveAccount(data)
+
+            if (!hasUserAnAccount) {
+                toast.success("La cuenta se creó correctamente")
+            } else {
+                toast.success("La cuenta se modificó correctamente")
+            }
         } else {
-            // Enviar mensaje flotante
+            toast.error("Rellena correctamente el formulario")
         }        
     }
 
