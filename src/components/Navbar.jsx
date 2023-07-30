@@ -1,8 +1,7 @@
 import { useContext, useEffect } from "react";
 import { ShoppingContext } from "../context";
 import { NavLink } from "react-router-dom";
-import { AiOutlineShoppingCart, AiOutlineDown } from "react-icons/ai"
-import { MdAccountCircle } from "react-icons/md"
+import { FaShoppingCart, FaUser } from "react-icons/fa"
 
 export function Navbar() {
     const {
@@ -21,6 +20,9 @@ export function Navbar() {
         {to: "/Products/Category/Skincare", text: "Skincare"},
         {to: "/Products/Category/Groceries", text: "Groceries"},
     ]
+
+    const activeStyle = "flex items-center inline-block w-full py-1 px-2 leading-[30px] bg-stone-50 rounded-lg"
+    const desactivedStyle = "flex items-center inline-block w-full py-1 px-2 leading-[30px]"
 
     const selectCategory = () => {
         setTimeout(() => {
@@ -43,13 +45,13 @@ export function Navbar() {
     }, [])
 
     return (
-        <nav className="w-full h-[50px] flex justify-between items-center fixed top-0 z-10 text-base bg-violet-200"> 
+        <nav className="w-full h-[50px] flex justify-between items-center fixed top-0 z-10 text-base bg-violet-300"> 
             <nav className="flex justify-between w-full max-w-5xl h-full m-auto py-2 px-8">
                 <ul className="flex items-center gap-5">
                     <li>
                         <NavLink
                             to={"/"}
-                            className={({isActive}) => isActive ? "font-bold p-2.5 leading-[30px]" : "p-2.5 leading-[30px]"}
+                            className={({isActive}) => isActive ? `${activeStyle}` : `${desactivedStyle}`}
                         >
                             Home
                         </NavLink>
@@ -59,18 +61,18 @@ export function Navbar() {
                         <NavLink
                             to={"/Products/All"}
                             onClick={() => selectCategory()}
-                            className="p-2.5 leading-[30px] cursor-pointer"
+                            className={`${desactivedStyle} cursor-pointer`}
                         >
                             Products    
                         </NavLink>
                             
-                        <ul className="flex flex-col gap-2 absolute top-full w-auto invisible overflow-hidden p-3 rounded-b-lg bg-cyan-200 origin-top scale-y-0 transition-all duration-300 group-hover:scale-y-100 group-hover:visible">
+                        <ul className="flex flex-col gap-2 absolute top-full w-auto invisible overflow-hidden p-3 rounded-b-lg bg-sky-300 origin-top scale-y-0 transition-all duration-300 group-hover:scale-y-100 group-hover:visible">
                             {menuLeft.map(link => (
                                 <li key={link.text} >
                                     <NavLink 
                                         to={link.to}
                                         onClick={() => selectCategory()}
-                                        className={({isActive}) => isActive ? "inline-block w-full p-2 font-bold" : "inline-block w-full p-2"}
+                                        className={({isActive}) => isActive ? `${activeStyle}` : `${desactivedStyle}`}
                                     >
                                         {link.text}
                                     </NavLink>
@@ -84,9 +86,9 @@ export function Navbar() {
                     <li>
                         <NavLink
                             to={"/Account"}
-                            className="p-2.5 leading-[30px]"
+                            className={({isActive}) => isActive ? `${activeStyle}` : `${desactivedStyle}`}
                         >
-                            <MdAccountCircle  className="inline-block w-7 h-7 mr-1" />
+                            <FaUser className="inline-block w-5 h-5 mr-1" />
                             {signIn ? account?.username : ""}
                         </NavLink>
                     </li>
@@ -94,9 +96,9 @@ export function Navbar() {
                     <li>
                         <NavLink
                             to={"/MyOrder"}
-                            className="p-2.5 leading-[30px]"
+                            className={({isActive}) => isActive ? `${activeStyle}` : `${desactivedStyle}`}
                         >
-                            <AiOutlineShoppingCart className="inline-block w-6 h-6 mr-1"/> 
+                            <FaShoppingCart className="inline-block w-5 h-5 mr-1"/> 
                             {cartProducts.length}
                         </NavLink>
                     </li>
