@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { ShoppingContext } from "../context";
 import { NavLink } from "react-router-dom";
 import { FaShoppingCart, FaUser } from "react-icons/fa"
+import { MENU_LEFT } from "../constant";
 
 export function Navbar() {
     const {
@@ -10,16 +11,6 @@ export function Navbar() {
         cartProducts,
         setSearchByCategory,
     } = useContext(ShoppingContext)
-
-    const menuLeft = [
-        {to: "/Products/All", text: "All"},
-        {to: "/Products/Favorites", text: "Favorites"},
-        {to: "/Products/Category/Smartphones", text: "Smartphones"},
-        {to: "/Products/Category/Laptops", text: "Laptops"},
-        {to: "/Products/Category/Fragrances", text: "Fragrances"},
-        {to: "/Products/Category/Skincare", text: "Skincare"},
-        {to: "/Products/Category/Groceries", text: "Groceries"},
-    ]
 
     const activeStyle = "flex items-center inline-block w-full py-1 px-2 leading-[30px] bg-stone-50 rounded-lg"
     const desactivedStyle = "flex items-center inline-block w-full py-1 px-2 leading-[30px]"
@@ -67,14 +58,14 @@ export function Navbar() {
                         </NavLink>
                             
                         <ul className="flex flex-col gap-2 absolute top-full w-auto invisible overflow-hidden p-3 rounded-b-lg bg-sky-300 origin-top scale-y-0 transition-all duration-300 group-hover:scale-y-100 group-hover:visible">
-                            {menuLeft.map(link => (
-                                <li key={link.text} >
+                            {MENU_LEFT.map(link => (
+                                <li key={link.TEXT} >
                                     <NavLink 
-                                        to={link.to}
+                                        to={link.TO}
                                         onClick={() => selectCategory()}
                                         className={({isActive}) => isActive ? `${activeStyle}` : `${desactivedStyle}`}
                                     >
-                                        {link.text}
+                                        {link.TEXT}
                                     </NavLink>
                                 </li>
                             ))}             

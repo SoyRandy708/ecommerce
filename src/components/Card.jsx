@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { ShoppingContext } from "../context"
 import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
 import { toast } from "sonner"
+import { TOAST_MESSAGE, BUTTONS_TEXT } from "../constant"
 
 export function Card({ data, title, price, category, image, description }) {
     const {
@@ -16,19 +17,19 @@ export function Card({ data, title, price, category, image, description }) {
 
     const addToCart = (product) => {
         setCartProducts([...cartProducts, product])
-        toast.success("Producto agregado al carrito")
+        toast.success(TOAST_MESSAGE.ADD_TO_CART)
     }
 
     const addToFavorite = (product) => {
         if(!signIn) {
-            toast.error("Inicia sesión para poder guardar tus productos favoritos")
+            toast.error(TOAST_MESSAGE.UNLOGED_TO_ADD_FAVORITE)
         } else {
             const data = {
                 ...account,
                 favorites: [product, ...account?.favorites],
             }
             saveAccount(data)
-            toast.success("Producto agregado a favoritos")
+            toast.success(TOAST_MESSAGE.ADD_TO_FAVORITES)
         }
     }
 
@@ -42,7 +43,7 @@ export function Card({ data, title, price, category, image, description }) {
             favorites: [...newFavorites],
         }
         saveAccount(data)
-        toast.error("Producto eliminado de favoritos")
+        toast.error(TOAST_MESSAGE.DELETE_TO_FAVORITES)
     }
 
     const previewProduct = (product) => {
@@ -93,13 +94,13 @@ export function Card({ data, title, price, category, image, description }) {
                         className="flex transition-colors duration-300 bg-violet-300 hover:bg-violet-700 hover:text-white"
                         onClick={() => previewProduct(data)}
                     >
-                        Ver mas
+                        {BUTTONS_TEXT.SEE_MORE}
                     </button>
                     <button
                         className="transition-colors duration-300 bg-purple-300 hover:bg-purple-700 hover:text-white"
                         onClick={() => addToCart(data)}
                     >
-                        Añadir 
+                        {BUTTONS_TEXT.ADD_TO_CART}
                         <AiOutlineShoppingCart className="inline-block w-6 h-6 mr-1"/> 
                     </button>
                 </div>

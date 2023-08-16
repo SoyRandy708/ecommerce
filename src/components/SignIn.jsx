@@ -1,6 +1,7 @@
 import { useContext, useState, useRef } from "react"
 import { ShoppingContext } from "../context"
 import { toast } from "sonner"
+import { TOAST_MESSAGE, BUTTONS_TEXT } from "../constant"
 
 export function SignIn() {
     const  {
@@ -36,13 +37,13 @@ export function SignIn() {
             saveAccount(data)
 
             if (!hasUserAnAccount) {
-                toast.success("La cuenta se creó correctamente")
+                toast.success(TOAST_MESSAGE.ACCOUNT_CREATED)
                 saveSignIn(true)
             } else {
-                toast.success("La cuenta se modificó correctamente")
+                toast.success(TOAST_MESSAGE.ACCOUNT_MODIFIED)
             }
         } else {
-            toast.error("Rellena correctamente el formulario")
+            toast.error(TOAST_MESSAGE.FORM_INCORRECT)
         }        
     }
 
@@ -54,7 +55,7 @@ export function SignIn() {
                     disabled={!hasUserAnAccount}
                     onClick={() => saveSignIn(true)}
                 >
-                    Sign In
+                    {BUTTONS_TEXT.SIGN_IN}
                 </button>
             )
         } else {
@@ -65,7 +66,7 @@ export function SignIn() {
                         disabled={!hasUserAnAccount}
                         onClick={() => saveSignIn(false)}
                     >
-                        Sign Out
+                        {BUTTONS_TEXT.SIGN_OUT}
                     </button>
 
                     <button
@@ -73,7 +74,7 @@ export function SignIn() {
                         disabled={!hasUserAnAccount}
                         onClick={() => setView("edit-user-info")}
                     >
-                        Edit
+                        {BUTTONS_TEXT.EDIT}
                     </button>
                 </div>                
             )
@@ -108,7 +109,7 @@ export function SignIn() {
                     disabled={hasUserAnAccount}
                     onClick={() => setView("edit-user-info")}
                 >
-                    Sign Up
+                    {BUTTONS_TEXT.SIGN_UP}
                 </button>
             </div>
         )
@@ -155,7 +156,7 @@ export function SignIn() {
                         className="w-full py-3 rounded-lg bg-black text-white"
                         onClick={() => setView("user-info")}
                     >
-                        Cancel
+                        {BUTTONS_TEXT.CANCEL}
                     </button>
 
                     <button
