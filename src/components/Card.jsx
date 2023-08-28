@@ -73,7 +73,7 @@ export function Card({ data, title, price, category, image, description }) {
     }
 
     return (
-        <figure className="relative w-full h-auto bg-blue-200 shadow-xl rounded-xl overflow-hidden">
+        <figure className="relative w-full h-full bg-blue-200 shadow-xl rounded-xl overflow-hidden">
             {renderIconCard()}
             <p className="absolute top-0 left-0 bg-sky-400 rounded-xl p-2"> {category} </p>
 
@@ -84,20 +84,20 @@ export function Card({ data, title, price, category, image, description }) {
             />
 
             <div className="flex flex-col gap-2 p-2">
-                <figcaption className="flex gap-3 justify-between p-1">
+                <figcaption className="flex flex-col gap-3 justify-between p-1 sm:flex-row">
                     <p className="text-ellipsis whitespace-nowrap overflow-hidden"> {title} </p>
                     <span className="text-black font-bold"> ${price} </span> 
                 </figcaption>
 
-                <div className="flex justify-around w-full font-medium [&>button]:py-1 [&>button]:px-2 [&>button]:rounded-lg [&>button]:text-lg [&>button]:cursor-pointer">
+                <div className="flex flex-col gap-2 content-center justify-around w-full font-medium [&>button]:py-1 [&>button]:px-2 [&>button]:rounded-lg [&>button]:text-lg [&>button]:cursor-pointer sm:flex-row">
                     <button
-                        className="flex transition-colors duration-300 bg-violet-300 hover:bg-violet-700 hover:text-white"
+                        className="flex-grow transition-colors whitespace-nowrap duration-300 bg-violet-300 hover:bg-violet-700 hover:text-white"
                         onClick={() => previewProduct(data)}
                     >
                         {BUTTONS_TEXT.SEE_MORE}
                     </button>
                     <button
-                        className="transition-colors duration-300 bg-purple-300 hover:bg-purple-700 hover:text-white"
+                        className="flex-grow transition-colors whitespace-nowrap duration-300 bg-purple-300 hover:bg-purple-700 hover:text-white"
                         onClick={() => addToCart(data)}
                     >
                         {BUTTONS_TEXT.ADD_TO_CART}
