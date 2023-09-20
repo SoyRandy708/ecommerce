@@ -13,16 +13,59 @@ export function SignIn() {
     } = useContext(ShoppingContext)
     const [view, setView] = useState("user-info")
     const form = useRef(null)
+    const regex = {
+        email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        password: /^(?=.*\d).{8,20}$/,
+    }
+
+    const checkForm = (e) => {
+        const input = e.target
+        const container = e.target.parentNode
+        const messageError = container.querySelector(".message-error")
+
+        console.log(messageError)
+        
+        if (input.id === "username") {
+            if (input.value.length > 4 && input.value.length < 21) {
+                input.style.borderColor = "green"
+                messageError.classList.remove("block")
+                messageError.classList.add("hidden")
+            } else {
+                input.style.borderColor = "red"
+                messageError.classList.add("block")
+                messageError.classList.remove("hidden")
+            }
+        } else if (input.id === "email") {
+            if (regex.email.test(input.value)) {
+                input.style.borderColor = "green"
+                messageError.classList.remove("block")
+                messageError.classList.add("hidden")
+            } else {
+                input.style.borderColor = "red"
+                messageError.classList.add("block")
+                messageError.classList.remove("hidden")
+            }
+        } else if (input.id === "password") {
+            if (regex.password.test(input.value)) {
+                input.style.borderColor = "green"
+                messageError.classList.remove("block")
+                messageError.classList.add("hidden")
+            } else {
+                input.style.borderColor = "red"
+                messageError.classList.add("block")
+                messageError.classList.remove("hidden")
+            }
+        }
+    }
 
     const editAccount = (event) => {
         event.preventDefault()
 
         const formData = Object.fromEntries(new FormData(form.current))
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
         if (
             formData.username.length > 4 &&
-            emailRegex.test(formData.email) &&
+            regex.email.test(formData.email) &&
             formData.password.length > 5 
         ) {
             const data = {
@@ -119,16 +162,21 @@ export function SignIn() {
         return (
             <form ref={form} className="flex flex-col gap-4 w-80">
                 <div className="flex flex-col gap-1">
-                    <label htmlFor="name" className="font-light text-sm">Your username:</label>
+                    <label htmlFor="username" className="font-light text-sm">Your username:</label>
                     <input 
                         type="text" 
                         id="username"
                         name="username"
                         defaultValue={account?.username}
+                        onChange={(e) => checkForm(e)}
                         placeholder="Randy"
-                        className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
+                        className="py-2 px-4 border-2 border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
+                    <ul className="message-error [text-wrap:balance] hidden text-red-600 text-xs list-disc pl-5">
+                        <li>El username tiene que tener entre 5 y 20 caracteres.</li>
+                    </ul>
                 </div>
+
                 <div className="flex flex-col gap-1">
                     <label htmlFor="email" className="font-light text-sm">Your email:</label>
                     <input 
@@ -136,10 +184,15 @@ export function SignIn() {
                         id="email"
                         name="email"
                         defaultValue={account?.email}
+                        onChange={(e) => checkForm(e)}
                         placeholder="hi@helloworld.com"
-                        className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
+                        className="py-2 px-4 border-2 border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
+                    <ul className="message-error [text-wrap:balance] hidden text-red-600 text-xs list-disc pl-5">
+                        <li>El email debe de tener una estructura tipica de uno usuario@dominio.com</li>
+                    </ul>
                 </div>
+
                 <div className="flex flex-col gap-1">
                     <label htmlFor="password" className="font-light text-sm">Your password:</label>
                     <input 
@@ -147,10 +200,16 @@ export function SignIn() {
                         id="password"
                         name="password"
                         defaultValue={account?.password}
+                        onChange={(e) => checkForm(e)}
                         placeholder="******"
-                        className="py-2 px-4 border border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
+                        className="py-2 px-4 border-2 border-black rounded-lg placeholder:font-light placeholder:text-sm placeholder:text-balck/60 focus:outline-none"
                     />
+                    <ul className="message-error [text-wrap:balance] hidden text-red-600 text-xs list-disc pl-5">
+                        <li>La contraseña debe tener una longitud entre 8 y 20 caracteres.</li>
+                        <li>La contraseña debe de incluir por lo menos 1 digíto</li>
+                    </ul>
                 </div>
+
                 <div className="w-full flex gap-2">
                     <button
                         className="w-full py-3 rounded-lg bg-black text-white"
