@@ -2,14 +2,10 @@ import { useContext } from "react"
 import { ShoppingContext } from "../context"
 import { Card } from "../components/Card"
 import { Cards } from "../components/Cards"
+import { InputSearch } from "../components/InputSearch"
 
 export function Favorites() {
-	const { setSearchByTitle, searchByTitle, account, signIn } =
-		useContext(ShoppingContext)
-
-	const changeSearchTitle = event => {
-		setSearchByTitle(event.target.value)
-	}
+	const { searchByTitle, account, signIn } = useContext(ShoppingContext)
 
 	const filterFavoriteProducts = account?.favorites.filter(product => {
 		const productoName = product.title.toLowerCase()
@@ -54,13 +50,7 @@ export function Favorites() {
 
 	return (
 		<>
-			<input
-				type="text"
-				value={searchByTitle}
-				placeholder="Busca tu producto..."
-				className="w-full max-w-sm p-3 my-5 mx-auto border-2 border-black outline-none rounded-lg focus:border-blue-800"
-				onChange={event => changeSearchTitle(event)}
-			/>
+			<InputSearch />
 
 			{isUserSignIn()}
 		</>
