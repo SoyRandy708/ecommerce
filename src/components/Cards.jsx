@@ -1,6 +1,6 @@
 export function Cards({ children }) {
 	return (
-		<section className="grid grid-cols-2 justify-center gap-2 w-full max-w-6xl sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 lg:gap-4">
+		<section className="grid  justify-center gap-4 w-full max-w-6xl grid-cols-[repeat(auto-fill,minmax(225px,1fr))] lg:gap-6">
 			{children}
 		</section>
 	)
