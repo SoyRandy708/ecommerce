@@ -3,13 +3,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: [
-		"standard",
-		"plugin:react/recommended",
-		"plugin:react/jsx-runtime",
-		"eslint-config-prettier",
-		"eslint-disable-next-line react/prop-types",
-	],
+	extends: ["standard", "plugin:react/recommended", "plugin:react/jsx-runtime", "eslint-config-prettier"],
 	overrides: [
 		{
 			env: {
@@ -25,7 +19,8 @@ module.exports = {
 		ecmaVersion: "latest",
 		sourceType: "module",
 	},
-
 	plugins: ["react"],
-	rules: {},
+	rules: {
+		"react/prop-types": "off",
+	},
 }
