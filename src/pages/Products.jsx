@@ -4,35 +4,24 @@ import { Cards } from "../components/Cards"
 import { Card } from "../components/Card"
 import { ProductDetail } from "../components/ProductDetail"
 import { InputSearch } from "../components/InputSearch"
+import { filterProducts } from "../lib"
 
 export function Products() {
 	const { searchByTitle, searchByCategory, products } =
 		useContext(ShoppingContext)
 
-	const filterProducts = products.filter(product => {
-		const productoName = product.title.toLowerCase()
-		const productCategory = product.category.toLowerCase()
-		const filterName = searchByTitle.toLowerCase()
-		const filterCategory = searchByCategory.toLowerCase()
-
-		if (productoName.includes(filterName) && filterCategory === "all") {
-			return true
-		} else if (
-			productoName.includes(filterName) &&
-			productCategory === filterCategory
-		) {
-			return true
-		} else {
-			return false
-		}
-	})
+	const filteredProducts = filterProducts(
+		products,
+		searchByTitle,
+		searchByCategory
+	)
 
 	return (
 		<>
 			<InputSearch />
 
 			<Cards>
-				{filterProducts.map(product => (
+				{filteredProducts.map(product => (
 					<Card
 						key={product.id}
 						data={product}

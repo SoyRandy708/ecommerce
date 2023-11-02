@@ -20,7 +20,7 @@ export function Account() {
 				))}
 			</div>
 		) : (
-			""
+			<p className="message">Inicia sesión para poder ver tus compras.</p>
 		)
 	}
 

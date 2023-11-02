@@ -21,22 +21,23 @@ export function MyOrder() {
 
 		if (existingProduct) {
 			existingProduct.quantity += 1
+			return existingProduct
 		} else {
-			groupedProducts.push({ ...product, quantity: 1 })
+			return groupedProducts.push({ ...product, quantity: 1 })
 		}
 	})
 
 	const lessProduct = product => {
-		let newProducts = [...cartProducts]
-		let index = newProducts.findIndex(pro => pro.title === product.title)
+		const newProducts = [...cartProducts]
+		const index = newProducts.findIndex(pro => pro.title === product.title)
 		newProducts.splice(index, 1)
 		setCartProducts(newProducts)
 	}
 
 	const plusProduct = product => {
-		let newProducts = [...cartProducts]
-		let index = newProducts.findIndex(pro => pro.title === product.title)
-		let newProduct = newProducts.find(pro => pro.title === product.title)
+		const newProducts = [...cartProducts]
+		const index = newProducts.findIndex(pro => pro.title === product.title)
+		const newProduct = newProducts.find(pro => pro.title === product.title)
 		newProducts.splice(index, 0, newProduct)
 		setCartProducts(newProducts)
 	}
@@ -59,7 +60,7 @@ export function MyOrder() {
 
 		const newOrder = {
 			products: cartProducts,
-			totalPrice: totalPrice,
+			totalPrice,
 			date: Date(),
 		}
 
@@ -76,9 +77,7 @@ export function MyOrder() {
 	return (
 		<>
 			{groupedProducts.length === 0 ? (
-				<p className="grid min-h-[calc(100vh-120px)] items-center message">
-					Todavía no tienes productos en el carrito
-				</p>
+				<p className="message">Todavía no tienes productos en el carrito</p>
 			) : (
 				<div className="relative flex flex-wrap justify-center gap-3">
 					<nav className="w-9/12 max-w-3xl">
