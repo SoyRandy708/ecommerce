@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { AiFillDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"
 import { ShoppingContext } from "../context"
 import { toast } from "sonner"
+import { lessProduct, plusProduct, deleteProduct, cleanCart } from "../lib"
 
 export function MyOrder() {
 	const { cartProducts, setCartProducts, saveAccount, account, signIn } =
@@ -27,30 +28,6 @@ export function MyOrder() {
 		}
 	})
 
-	const lessProduct = product => {
-		const newProducts = [...cartProducts]
-		const index = newProducts.findIndex(pro => pro.title === product.title)
-		newProducts.splice(index, 1)
-		setCartProducts(newProducts)
-	}
-
-	const plusProduct = product => {
-		const newProducts = [...cartProducts]
-		const index = newProducts.findIndex(pro => pro.title === product.title)
-		const newProduct = newProducts.find(pro => pro.title === product.title)
-		newProducts.splice(index, 0, newProduct)
-		setCartProducts(newProducts)
-	}
-
-	const deleteProduct = product => {
-		const newProducts = cartProducts.filter(pro => pro.title !== product.title)
-		setCartProducts(newProducts)
-	}
-
-	const cleanCart = () => {
-		setCartProducts([])
-	}
-
 	const addOrder = () => {
 		if (!signIn) {
 			redirection("/Account")
@@ -70,7 +47,7 @@ export function MyOrder() {
 		}
 
 		saveAccount(data)
-		cleanCart()
+		cleanCart(setCartProducts)
 		toast.success("Compra realizada correctamente")
 	}
 
@@ -103,18 +80,24 @@ export function MyOrder() {
 							<h2 className="flex-grow"> {product.title} </h2>
 							<p className="flex items-center gap-4 flex-grow">
 								<AiOutlineMinus
-									onClick={() => lessProduct(product)}
+									onClick={() =>
+										lessProduct(product, cartProducts, setCartProducts)
+									}
 									className="text-2xl transition-colors duration-300 hover:text-red-600 cursor-pointer"
 								/>
 								{product.quantity}
 								<AiOutlinePlus
-									onClick={() => plusProduct(product)}
+									onClick={() =>
+										plusProduct(product, cartProducts, setCartProducts)
+									}
 									className="text-2xl transition-colors duration-300 hover:text-green-600 cursor-pointer"
 								/>
 							</p>
 							<p className="flex-grow"> ${product.price * product.quantity} </p>
 							<AiFillDelete
-								onClick={() => deleteProduct(product)}
+								onClick={() =>
+									deleteProduct(product, cartProducts, setCartProducts)
+								}
 								className="flex-grow text-3xl transition-colors duration-300 hover:text-red-600 cursor-pointer"
 							/>
 						</article>
@@ -127,7 +110,7 @@ export function MyOrder() {
 					<div className="flex justify-evenly w-full max-w-3xl">
 						<button
 							className="py-2 px-4 text-lg bg-black text-white rounded-md hover:bg-violet-700 transition-colors duration-300"
-							onClick={() => cleanCart()}
+							onClick={() => cleanCart(setCartProducts)}
 						>
 							Limpiar Carrito
 						</button>

@@ -1,14 +1,11 @@
 import { useContext } from "react"
 import { AiOutlineClose } from "react-icons/ai"
 import { ShoppingContext } from "../context"
+import { closePreviewProduct } from "../lib"
 
 export function ProductDetail() {
 	const { isOpenProductDetail, setIsOpenProductDetail, productToShow } =
 		useContext(ShoppingContext)
-
-	const close = () => {
-		setIsOpenProductDetail(false)
-	}
 
 	return (
 		<>
@@ -16,7 +13,7 @@ export function ProductDetail() {
 				<aside className="fixed right-0 z-10 flex flex-col h-[calc(100vh-60px)] w-[360px] bg-violet-200 rounded-lg overflow-hidden">
 					<AiOutlineClose
 						className="absolute top-4 right-4 w-7 h-7 cursor-pointer"
-						onClick={close}
+						onClick={closePreviewProduct(setIsOpenProductDetail)}
 					/>
 					<img
 						className="object-cover"
