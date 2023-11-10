@@ -1,7 +1,9 @@
 import { useContext, useEffect } from "react"
 import { ShoppingContext } from "../context"
 import { NavLink } from "react-router-dom"
-import { FaShoppingCart, FaUser } from "react-icons/fa"
+import { FaShoppingCart, FaUser, FaChevronUp } from "react-icons/fa"
+import { IoClose } from "react-icons/io5"
+import { HiOutlineMenu } from "react-icons/hi"
 import { MENU_LEFT } from "../constant"
 
 export function Navbar() {
@@ -28,17 +30,51 @@ export function Navbar() {
 		}, 0)
 	}
 
+	const activeMenu = () => {
+		const iconos = document.querySelectorAll(".icon")
+		const menu = document.querySelector(".menu")
+
+		iconos.forEach(icon => {
+			icon.classList.toggle("hidden")
+		})
+
+		menu.classList.toggle("hidden")
+		menu.classList.toggle("flex")
+	}
+
+	const activeSubMenu = () => {
+		const submenu = document.querySelector(".submenu")
+		const iconSubmenu = document.querySelector(".icon_submenu")
+
+		if (window.innerWidth < 640) {
+			submenu.classList.toggle("max-h-96")
+			iconSubmenu.classList.toggle("rotate-180")
+		}
+	}
+
 	useEffect(() => {
 		selectCategory()
 	}, [])
 
 	return (
-		<nav className="w-full h-[50px] flex justify-between items-center fixed top-0 z-10 text-base bg-violet-300">
-			<nav className="flex justify-between w-full max-w-5xl h-full m-auto py-2 px-8">
-				<ul className="flex items-center gap-5">
+		<nav className="nav flex flex-col justify-center items-end w-full h-auto p-2 fixed top-0 z-10 text-base bg-violet-300">
+			<div className="sm:hidden">
+				<HiOutlineMenu
+					className="icon w-10 h-10"
+					onClick={() => activeMenu()}
+				/>
+				<IoClose
+					className="icon w-10 h-10 hidden"
+					onClick={() => activeMenu()}
+				/>
+			</div>
+
+			<ul className="menu hidden flex-col w-full gap-5 sm:flex sm:flex-row sm:justify-around">
+				<ul className="flex flex-col sm:flex-row gap-5">
 					<li>
 						<NavLink
 							to={"/"}
+							onClick={() => selectCategory()}
 							className={({ isActive }) =>
 								isActive ? `${activeStyle}` : `${desactivedStyle}`
 							}
@@ -48,36 +84,39 @@ export function Navbar() {
 					</li>
 
 					<li className="group">
-						<NavLink
-							to={"/Products/All"}
-							onClick={() => selectCategory()}
-							className={`${desactivedStyle} cursor-pointer`}
+						<span
+							onClick={() => activeSubMenu()}
+							className={`${desactivedStyle} flex gap-1 cursor-pointer`}
 						>
 							Products
-						</NavLink>
+							<FaChevronUp className="icon_submenu w-5 h-5 sm:group-hover:rotate-180 transition-transform duration-300" />
+						</span>
 
-						<ul className="flex flex-col gap-2 absolute top-full w-auto invisible overflow-hidden p-3 rounded-b-lg bg-sky-300 origin-top scale-y-0 transition-all duration-300 group-hover:scale-y-100 group-hover:visible">
-							{MENU_LEFT.map(link => (
-								<li key={link.TEXT}>
-									<NavLink
-										to={link.TO}
-										onClick={() => selectCategory()}
-										className={({ isActive }) =>
-											isActive ? `${activeStyle}` : `${desactivedStyle}`
-										}
-									>
-										{link.TEXT}
-									</NavLink>
-								</li>
-							))}
-						</ul>
+						<div className="submenu max-h-0 sm:group-hover:max-h-96 overflow-hidden rounded-b-lg bg-violet-300 transition-all duration-300 sm:absolute">
+							<ul className="flex flex-col p-3">
+								{MENU_LEFT.map(link => (
+									<li key={link.TEXT}>
+										<NavLink
+											to={link.TO}
+											onClick={() => selectCategory()}
+											className={({ isActive }) =>
+												isActive ? `${activeStyle}` : `${desactivedStyle}`
+											}
+										>
+											{link.TEXT}
+										</NavLink>
+									</li>
+								))}
+							</ul>
+						</div>
 					</li>
 				</ul>
 
-				<ul className="flex items-center gap-5">
+				<ul className="flex flex-col sm:flex-row gap-5">
 					<li>
 						<NavLink
 							to={"/Account"}
+							onClick={() => selectCategory()}
 							className={({ isActive }) =>
 								isActive ? `${activeStyle}` : `${desactivedStyle}`
 							}
@@ -90,6 +129,7 @@ export function Navbar() {
 					<li>
 						<NavLink
 							to={"/MyOrder"}
+							onClick={() => selectCategory()}
 							className={({ isActive }) =>
 								isActive ? `${activeStyle}` : `${desactivedStyle}`
 							}
@@ -99,7 +139,7 @@ export function Navbar() {
 						</NavLink>
 					</li>
 				</ul>
-			</nav>
+			</ul>
 		</nav>
 	)
 }
