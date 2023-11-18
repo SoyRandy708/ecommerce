@@ -11,9 +11,8 @@ export function Navbar() {
 		useContext(ShoppingContext)
 
 	const activeStyle =
-		"flex items-center inline-block w-full py-1 px-2 leading-[30px] bg-stone-50 rounded-lg"
-	const desactivedStyle =
-		"flex items-center inline-block w-full py-1 px-2 leading-[30px]"
+		"flex items-center inline-block w-full py-1 px-2 bg-stone-50 rounded-lg"
+	const desactivedStyle = "flex items-center inline-block w-full py-1 px-2"
 
 	const selectCategory = () => {
 		setTimeout(() => {
@@ -59,14 +58,8 @@ export function Navbar() {
 	return (
 		<nav className="nav flex flex-col justify-center items-end w-full h-auto p-2 fixed top-0 z-10 text-base bg-violet-300">
 			<div className="sm:hidden">
-				<HiOutlineMenu
-					className="icon w-10 h-10"
-					onClick={() => activeMenu()}
-				/>
-				<IoClose
-					className="icon w-10 h-10 hidden"
-					onClick={() => activeMenu()}
-				/>
+				<HiOutlineMenu className="icon w-8 h-8" onClick={() => activeMenu()} />
+				<IoClose className="icon w-8 h-8 hidden" onClick={() => activeMenu()} />
 			</div>
 
 			<ul className="menu hidden flex-col w-full gap-5 sm:flex sm:flex-row sm:justify-around">
@@ -93,7 +86,7 @@ export function Navbar() {
 						</span>
 
 						<div className="submenu max-h-0 sm:group-hover:max-h-96 overflow-hidden rounded-b-lg bg-violet-300 transition-all duration-300 sm:absolute">
-							<ul className="flex flex-col p-3">
+							<ul className="flex flex-col gap-1 p-3">
 								{MENU_LEFT.map(link => (
 									<li key={link.TEXT}>
 										<NavLink
